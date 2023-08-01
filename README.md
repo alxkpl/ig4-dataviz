@@ -37,7 +37,7 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 
 * ...
 
-## Contributions
+<!--## Contributions
 
 * Créer une "pull request" (PR) à partir d'une branche séparée.
 
@@ -47,7 +47,7 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 	* partie du cours visée
 	* type de PR (correction ou nouvelle fiche)
 	* nature de l'erreur
-	* ...
+	* ...-->
 
 <!-- ## Évaluations
 
