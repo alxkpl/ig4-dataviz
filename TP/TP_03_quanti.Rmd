@@ -22,8 +22,8 @@ Définissez les individus, la population, et la variable mesurée, en précisant
 
 ## Données
 
-Téléchargez et importez dans `R` les données relatives au nombre d'enfant par
-couples sur le site de
+Téléchargez et importez dans `R` les données relatives au nombre d'enfants par
+couple sur le site de
 l'[INSEE](https://www.insee.fr/fr/statistiques/4516614?sommaire=4516657&geo=FE-1).
 
 **Note**: lors du téléchargement, le fichier apparaît avec l'extension `.xlxs`.
@@ -52,7 +52,7 @@ Justifiez le choix de la représentation.
 Répondez à la question initiale.
 Pouvez-vous simplifier le graphe pour ne représenter que les informations permettant de répondre à la question initiale ?
 
-**Note** : pour permettre à `ggplot` de savoir quels points relier par une ligne dans le polygone des fréquence, vous pourrez utiliser l'`aes` "`group`".
+**Note** : pour permettre à `ggplot` de savoir quels points relier par une ligne dans le polygone des fréquences, vous pourrez utiliser l'`aes` "`group`".
 
 ## Autre question
 
@@ -83,7 +83,7 @@ dont l'âge n'est pas manquant.
 Représentez ces données sous la forme d'un histogramme.
 Justifiez le choix de la largeur des classes.
 
-Représentez ces même données sous la forme d'une boite à moustache (*boxplot*).
+Représentez ces même données sous la forme d'une boîte à moustache (*boxplot*).
 
 Laquelle de ces représentations est la plus informative ? Justifiez.
 
@@ -111,7 +111,7 @@ Décrivez l'expérience statistique.
 Sélectionnez dans le tableau uniquement les lignes répondant à ces critères, et
 dont l'âge n'est pas manquant.
 
-Représentez ces même données sous la forme de boites à moustaches (*boxplot*).
+Représentez ces même données sous la forme de boîtes à moustaches (*boxplot*).
 Il devrait y avoir en tout 4 boîtes, distinguées par des positions (en `x`) et des facettes.
 Pour créer et renommer les facettes, vous pourrez utiliser la commande suivante:
 ```{r eval = FALSE}
@@ -133,5 +133,4 @@ Quel graphique trouvez-vous le plus informatif ?
 ## Autre question
 
 Posez une autre question sur le jeu de données, et répondez-y à l'aide d'un graphique.
-Décrivez bien votre démarche statistique, le choix de la représentation, et les
-conclusions que vous en tirez.
+Décrivez bien votre démarche statistique, le choix de la représentation, et les conclusions que vous en tirez.
