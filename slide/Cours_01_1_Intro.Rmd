@@ -1,7 +1,7 @@
 ---
 title: "DO3 - Visualisation"
 subtitle: "Introduction"
-author: "Paul Bastide"
+author: "Paul Bastide, Chloé Serre-Combe"
 date: "28/03/2023"
 output:
   ioslides_presentation:
@@ -18,12 +18,16 @@ knitr::opts_chunk$set(echo = TRUE)
 # Informations Pratiques
 <!-- ************************************************************************ -->
 
-## Enseignant
+## Enseignants
 
 - Paul Bastide
     - paul.bastide@umontpellier.fr
     - Statistiques appliquées, Évolution
 
+- Chloé Serre-Combe
+    - chloe.serre-combe@umontpellier.fr
+    - Statistique des extrêmes, statistique spatiale
+    
 ## Module
 
 * Statistiques descriptives
@@ -38,18 +42,18 @@ knitr::opts_chunk$set(echo = TRUE)
   * `shiny`
 
 
-## Evaluation
+<!-- ## Evaluation -->
 
-* 1/2 contrôle continu
-  * Comptes rendus de TP
+<!-- * 1/2 contrôle continu -->
+<!--   * Comptes rendus de TP -->
 
-* 1/2 projet final
-  * Choisir un jeu de données d'intérêt
-  * Poser au moins trois questions sur les données
-  * Proposer une ou plusieurs représentations graphiques (dynamiques)
-  * Deux rendus :
-    * Un rapport technique, reproductible, détaillant la démarche statistique
-    * Un produit fini de visualisation des données, partageable, indépendant.
+<!-- * 1/2 projet final -->
+<!--   * Choisir un jeu de données d'intérêt -->
+<!--   * Poser au moins trois questions sur les données -->
+<!--   * Proposer une ou plusieurs représentations graphiques (dynamiques) -->
+<!--   * Deux rendus : -->
+<!--     * Un rapport technique, reproductible, détaillant la démarche statistique -->
+<!--     * Un produit fini de visualisation des données, partageable, indépendant. -->
 
 ## Sources de données
 
@@ -80,20 +84,22 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 * *Data Visualization, A practical introduction*, Kieran Healy:
   * [Livre](https://socviz.co/)
 
-* Page [GitHub](https://github.com/pbastide/do3-dataviz) du cours
+* Page [GitHub](https://github.com/chloesrcb/ig4-dataviz/) du cours
 
-## GitHub `do3-dataviz`
+## GitHub `ig4-dataviz`
 
-* https://github.com/pbastide/do3-dataviz
+* Basé sur le [repo GitHub de Paul Bastide](https://github.com/pbastide/do3-dataviz)
+
+* https://github.com/chloesrcb/ig4-dataviz/
 
 * Les diapos sont dans `slide`
 
 * Les TPs sont dans `TP`
 
-* **Points Bonus** :
-  * Typos et erreurs dans les diapos et TPs
-  * Correction par "Pull Requests"
-  * $k$-ème PR acceptée = $\frac{1}{2^{k}}$ points en plus sur la note du CC.
+<!-- * **Points Bonus** : -->
+<!--   * Typos et erreurs dans les diapos et TPs -->
+<!--   * Correction par "Pull Requests" -->
+<!--   * $k$-ème PR acceptée = $\frac{1}{2^{k}}$ points en plus sur la note du CC. -->
 
 <!-- ************************************************************************ -->
 # R Markdown
@@ -157,4 +163,4 @@ filled.contour(volcano, color.palette = terrain.colors, asp = 1)
 
 * [RStudio](https://rstudio.com/)
 
-* Ces diapos sur [GitHub](https://github.com/pbastide/do3-dataviz)
+* Ces diapos sur [GitHub](https://github.com/chloesrcb/ig4-dataviz/)
