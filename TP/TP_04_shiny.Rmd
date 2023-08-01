@@ -1,7 +1,6 @@
 ---
 title: "TP 4 - Shiny"
-author: "Paul Bastide"
-date: "25/04/2023"
+author: "Paul Bastide, Chloé Serre-Combe"
 output: html_document
 ---
 
@@ -50,7 +49,7 @@ Quel graphique (histogramme ou boxplot) s'y prête le mieux ?
 ## Dimensions du bec
 
 On se pose la question : 
-"Les pingouins avec un bec plus longs ont-ils un bec plus large ?"
+"Les pingouins avec un bec plus long ont-ils un bec plus large ?"
 
 Représentez la largeur du bec en fonction de la longueur du bec comme un nuage de
 points (en mélangeant toutes les espèces).

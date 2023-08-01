@@ -1,8 +1,7 @@
 ---
-title: "DO3 - Visualisation"
+title: "IG4 - Visualisation"
 subtitle: "Introduction - `ggplot2`"
-author: "Paul Bastide"
-date: "28/03/2023"
+author: "Paul Bastide, Chloé Serre-Combe"
 output:
   ioslides_presentation:
     fig_width: 7
@@ -29,6 +28,7 @@ output:
 ```{r ggplot2, eval = FALSE}
 install.packages("ggplot2")
 ```
+
 ```{r ggplot2-2, eval = TRUE}
 library("ggplot2")
 ```

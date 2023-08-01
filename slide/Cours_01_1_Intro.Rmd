@@ -1,8 +1,7 @@
 ---
-title: "DO3 - Visualisation"
+title: "IG4 - Visualisation"
 subtitle: "Introduction"
 author: "Paul Bastide, Chloé Serre-Combe"
-date: "28/03/2023"
 output:
   ioslides_presentation:
     fig_width: 7
