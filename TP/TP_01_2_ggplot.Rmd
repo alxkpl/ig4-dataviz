@@ -12,7 +12,7 @@ Ce dossier contient un fichier `.Rproj`, qui définit un "projet" sur RStudio.
 Le projet permet de définir un certain nombre de comportements par défaut,
 ainsi qu'une arborescence.
 
-Ouvrez ce projet dans RStudio.
+Ouvrez ce projet dans `RStudio`.
 
 Créez un nouveau document `.Rmd`, avec une sortie au format `pdf`.
 
@@ -66,8 +66,7 @@ library(ggplot2)
 
 On utilise ici les mêmes données de température.
 
-Grâce à la structure en projet, on peut y faire référence facilement en utilisant
-la librairie `here`.
+Grâce à la structure en projet, on peut y faire référence facilement en utilisant la librairie `here`.
 
 ```{r install-here, eval = FALSE}
 install.packages("here")
@@ -160,13 +159,11 @@ Vous pouvez par exemple tester ici `geom_line` ou `geom_point`.
 
 > **À faire**:
 Tracer la température moyenne en fonction du jour de l'année à Montpellier.
-Faire varier le type de graphique et leur taille (lignes ou points plus ou moins gros),
-ainsi que leur couleur.
+Faire varier le type de graphique et leur taille (lignes ou points plus ou moins gros), ainsi que leur couleur.
 
 ## Plusieurs villes
 
-On revient au jeu de données complet, avec les températures moyennes pour trois
-villes : Embrun, Montpellier et Lille.
+On revient au jeu de données complet, avec les températures moyennes pour trois villes : Embrun, Montpellier et Lille.
 
 ```{r temperatures-head}
 head(temps_average)
@@ -199,8 +196,7 @@ ggplot(temps_average,
 ```
 
 > **À faire**:
-Tracer la température moyenne en fonction du jour de l'année dans les trois villes,
-en utilisant soit la couleur, soit le type de lignes pour les distinguer.
+Tracer la température moyenne en fonction du jour de l'année dans les trois villes, en utilisant soit la couleur, soit le type de lignes pour les distinguer.
 
 ## Températures représentées en `color`
 
@@ -220,10 +216,8 @@ ggplot(temps_average,
 ```
 
 > **À faire**:
-Tracer la température moyenne en fonction du jour de l'année dans les trois villes,
-en utilisant la couleur pour représenter la température.
-Faire varier l'attribution des différentes colonnes de données aux différentes `aes`,
-et observer le résultat.
+Tracer la température moyenne en fonction du jour de l'année dans les trois villes, en utilisant la couleur pour représenter la température.
+Faire varier l'attribution des différentes colonnes de données aux différentes `aes`, et observer le résultat.
 
 ## Mélanges
 

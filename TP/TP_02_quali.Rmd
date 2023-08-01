@@ -6,7 +6,7 @@ output: html_document
 
 ## Mise en place
 
-Ouvrez le projet du cours dans RStudio.
+Ouvrez le projet du cours dans `RStudio`.
 
 Créez un nouveau document `.Rmd`, avec une sortie au format `pdf`.
 
