@@ -79,7 +79,7 @@ Un autre [exemple](https://jjallaire.shinyapps.io/shiny-crandash/)
 présente les téléchargements des paquets `R` les plus populaires.
 (Ce deuxième exemple utilise en plus la librairie 
 [flexdashboard](https://pkgs.rstudio.com/flexdashboard/articles/shiny.html),
-non présenté ici mais que je vous invite à découvrir par vous même.)
+non présentée ici mais que je vous invite à découvrir par vous même).
 
 Cet outil est aussi utilisé par l'administration française, voir par
 exemple la [ségrégation résidentielle en France](https://francestrategie.shinyapps.io/app_seg/),
