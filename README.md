@@ -49,7 +49,7 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 	* nature de l'erreur
 	* ...
 
-## Évaluations
+<!-- ## Évaluations
 
 * 1/2 contrôle continu
   * Comptes rendus de TP
@@ -60,12 +60,12 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
   * Proposer une ou plusieurs représentations graphiques (dynamiques)
   * Deux rendus:
     * Un rapport technique, reproductible, détaillant la démarche statistique
-    * Un produit fini de visualisation des données, partageable, indépendant.
+    * Un produit fini de visualisation des données, partageable, indépendant.-->
 
-## Points bonus
+<!--## Points bonus
 
 * Typos et erreurs dans les diapos et fiches
-  * k-ème PR accepté = $\frac{1}{2^{k}}$ points en plus sur la note du CC.
+  * k-ème PR accepté = $\frac{1}{2^{k}}$ points en plus sur la note du CC.-->
   
 ## Attribution
 
