@@ -1,8 +1,7 @@
 ---
 title: "DO3 - Visualisation"
 subtitle: "Couleurs"
-author: "Paul Bastide"
-date: "25/04/2023"
+author: "Paul Bastide, Chloé Serre-Combe"
 output:
   ioslides_presentation:
   fig_width: 7
