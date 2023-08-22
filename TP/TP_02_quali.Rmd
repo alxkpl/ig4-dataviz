@@ -1,6 +1,7 @@
 ---
 title: "TP 2 - Variables qualitatives"
 author: "Paul Bastide, Chloé Serre-Combe"
+date: "2023-2024"
 output: html_document
 ---
 
