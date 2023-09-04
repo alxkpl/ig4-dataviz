@@ -1,6 +1,6 @@
-# IG4 - Data Vizualization
+# IG4 - Data Visualization
 
-Dépôt `git` en support du cours *IG4 - Data Vizualization*.
+Dépôt `git` en support du cours *IG4 - Data Visualization*.
 
 ## Supports de cours
 
