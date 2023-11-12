@@ -1,10 +1,10 @@
 # IG4 - Data Visualization
 
-Dépôt `git` en support du cours *IG4 - Data Visualization*.
+Dépôt `git` en support du cours *IG4 - Data Visualization* reprenant le cours fait par Paul Bastide aux *DO3*.
 
 ## Supports de cours
 
-* Les diapositives utilisées en classe sont dans le dossier `slide`.
+* Les diapositives sont dans le dossier `slide`.
 
 * Les TPs dans le dossier `TP`.
 
