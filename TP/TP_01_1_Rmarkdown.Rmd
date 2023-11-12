@@ -110,7 +110,7 @@ Par exemple, sur les `r n_exp` expériences, on a tiré ici `r res[1]` fois la b
 
 ## Exercice
 
-> **À rendre**: votre rapport *compilé* sous format `html`.
+> **À faire**: un rapport *compilé* sous format `html` ou `pdf`.
 
 Rédigez un document `R markdown` qui réponde au problème exposé ci-dessous.
 Le document doit être auto-suffisant, et exposer clairement le problème,
