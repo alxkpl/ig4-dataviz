@@ -37,36 +37,6 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 
 * ...
 
-<!--## Contributions
-
-* Créer une "pull request" (PR) à partir d'une branche séparée.
-
-* Respecter la structure des dossiers.
-
-* Messages de "commits" et "PR" informatifs :
-	* partie du cours visée
-	* type de PR (correction ou nouvelle fiche)
-	* nature de l'erreur
-	* ...-->
-
-<!-- ## Évaluations
-
-* 1/2 contrôle continu
-  * Comptes rendus de TP
-
-* 1/2 projet final
-  * Choisir un jeu de données d'intérêt
-  * Poser au moins trois questions sur les données
-  * Proposer une ou plusieurs représentations graphiques (dynamiques)
-  * Deux rendus:
-    * Un rapport technique, reproductible, détaillant la démarche statistique
-    * Un produit fini de visualisation des données, partageable, indépendant.-->
-
-<!--## Points bonus
-
-* Typos et erreurs dans les diapos et fiches
-  * k-ème PR accepté = $\frac{1}{2^{k}}$ points en plus sur la note du CC.-->
-  
 ## Attribution
 
 La structure du cours est fortement inspirée du cours 
