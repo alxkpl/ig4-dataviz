@@ -195,6 +195,6 @@ $~$
 
 4 - On mesure la variable sur les individus de l'échantillon.
 
-*"Bonjour Monsieur, c'est pour un sondage, quel âge avez-vous ?*
+*"Bonjour Monsieur, c'est pour un sondage, quel âge avez-vous ?"*
 
 5 - Et après ?
