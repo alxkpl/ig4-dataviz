@@ -40,12 +40,6 @@ knitr::opts_chunk$set(echo = TRUE)
   * `ggplot2`
   * `shiny`
 
-
-## Evaluation
-
-* Projet 
-* 
-
 ## Sources de données
 
 * [Open Data Montpellier Méditerranée Métropole](https://data.montpellier3m.fr/datasets)
