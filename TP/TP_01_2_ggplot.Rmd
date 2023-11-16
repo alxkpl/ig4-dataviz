@@ -65,7 +65,7 @@ library(ggplot2)
 
 ## Données: Températures moyennes à Montpellier
 
-On utilise ici les mêmes données de température.
+On utilise ici les mêmes données de température que celles du cours.
 
 Grâce à la structure en projet, on peut y faire référence facilement en utilisant la librairie `here`.
 
