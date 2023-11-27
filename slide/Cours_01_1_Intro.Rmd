@@ -26,7 +26,12 @@ knitr::opts_chunk$set(echo = TRUE)
 - Chloé Serre-Combe
     - chloe.serre-combe@umontpellier.fr
     - Statistique des extrêmes, statistique spatiale
-    
+
+```{r}
+set.se
+rnorm(3)
+```
+
 ## Module
 
 * Statistiques descriptives

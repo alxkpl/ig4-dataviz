@@ -208,8 +208,7 @@ On s'intéresse ici en particulier à leur jeu de données historique
 sur les femmes dans les parlements nationaux, disponible [ici](https://data.ipu.org/fr/femmes-historiques).
 
 > **À faire**: Téléchargez les données, puis importez les dans `R` à l'aide de
-la fonction `read_xlsx` de la librairie `readxl`. Prenez garde au type de chaque colonne.   
-Décrivez brièvement les données (taille, variables, ...).
+la fonction `read_csv`, `read_xlsx` ou `read_excel` de la librairie `readxl` (selon l'extension du fichier télécharger). Attention les premières lignes du fichier ne correspondent pas aux colonnes du jeu de données (Comment faire ?). Prenez garde au type de chaque colonne. Décrivez brièvement les données (taille, variables, ...).
 
 
 ## Assemblée constituante française

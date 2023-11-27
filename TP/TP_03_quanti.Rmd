@@ -27,9 +27,10 @@ Téléchargez et importez dans `R` les données relatives au nombre d'enfants pa
 couple sur le site de
 l'[INSEE](https://www.insee.fr/fr/statistiques/4516614?sommaire=4516657&geo=FE-1).
 
-**Note**: lors du téléchargement, le fichier apparaît avec l'extension `.xlxs`.
+**Note**: lors du téléchargement, le fichier apparaît avec l'extension `.xls`.
 C'est une erreur d'encodage, et le fichier est en fait un `.csv`.
 Pour le lire correctement, il faut donc remplacer l'extension à la main.
+Utilisez la fonction `read.csv` pour charger les données avec le séparateur correspondant, dans notre cas `sep=,`.
 
 **Note**: Vous pouvez changer les noms de colonnes et les situations maritales pour
 qu'ils soient plus explicites et faciles à manipuler.
@@ -38,7 +39,7 @@ Décrivez les données en quelques mots.
 
 ## Formatage
 
-En utilisant la fonction `pivot_longer`, formatez les données sous 
+En utilisant la fonction `pivot_longer` de la librairie `tidyr`, formatez les données sous 
 "format long",
 avec une colonne "situation", donnant la situation maritale,
 une colonne "enfants" donnant le nombre d'enfants, 
