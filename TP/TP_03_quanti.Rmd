@@ -12,6 +12,9 @@ library(ggplot2)
 
 -----
 
+**CONSIGNES :**
+Ce TP est à rendre avant votre CC d'Analyse de données. Il vous permettra d'obtenir un bonus si le travail est bien fait ou un malus si le travail est baclé ou que le TP n'est pas rendu. Il faudra bien rédiger et me montrer que vous comprenez ce que vous faites. Vous pouvez travailler en groupe de 3 personnes maximum. Par groupe, vous devrez me rendre le fichier .Rmd et le fichier .pdf ou .html à l'adresse mail suivante : chloe.serre-combe@umontpellier.fr.
+
 # Nombre d'enfants
 
 ## Question
