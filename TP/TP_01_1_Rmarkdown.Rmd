@@ -1,7 +1,7 @@
 ---
 title: "TP 1 - Introduction à `R markdown`"
-author: "Paul Bastide, Chloé Serre-Combe"
-date: "2023-2024"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre Capel"
+date: "2024-2025"
 output: html_document
 ---
 

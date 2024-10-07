@@ -1,7 +1,7 @@
 ---
 title: "IG4 - Visualisation"
 subtitle: "Introduction"
-author: "Paul Bastide, Chloé Serre-Combe"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre Capel"
 output:
   ioslides_presentation:
     fig_width: 7
@@ -27,19 +27,20 @@ knitr::opts_chunk$set(echo = TRUE)
     - chloe.serre-combe@umontpellier.fr
     - Statistique des extrêmes, statistique spatiale
 
+- Alexandre Capel
+    - alexandre.capel@umontpellier.fr
+    - Statistique des extrêmes, modèles graphiques
 
 ## Module
 
-* Statistiques descriptives
-  * Comment résumer un tableau de données ?
+* But 
+  * comment résumer un tableau de données ?
+  * mais surtout : comment faciliter la lecture de ces données ?
 
-* Visualisation
-  * Comment visualiser des données ?
-
-* Outils
-  * `Rmarkdown`
-  * `ggplot2`
-  * `shiny`
+* Plan 
+  * `Rmarkdown` + `ggplot2` (séance 1)  
+  * Visualisation quali/quanti (séance 2)
+  * `shiny` (séance 3)
 
 ## Sources de données
 
@@ -70,13 +71,13 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 * *Data Visualization, A practical introduction*, Kieran Healy:
   * [Livre](https://socviz.co/)
 
-* Page [GitHub](https://github.com/chloesrcb/ig4-dataviz/) du cours
+* Page [GitHub](https://github.com/alxkpl/ig4-dataviz) du cours
 
 ## GitHub `ig4-dataviz`
 
-* Basé sur le [repo GitHub de Paul Bastide](https://github.com/pbastide/do3-dataviz)
+* Basé sur le [repo GitHub de Paul Bastide](https://github.com/pbastide/do3-dataviz) et [de Clhoé Serre-Combe](https://github.com/chloesrcb/ig4-dataviz)
 
-* https://github.com/chloesrcb/ig4-dataviz/
+* [Le mien](https://github.com/alxkpl/ig4-dataviz)
 
 * Les diapos sont dans `slide`
 
@@ -144,4 +145,4 @@ filled.contour(volcano, color.palette = terrain.colors, asp = 1)
 
 * [RStudio](https://rstudio.com/)
 
-* Ces diapos sur [GitHub](https://github.com/chloesrcb/ig4-dataviz/)
+* Ces diapos sur [GitHub](https://github.com/alxkpl/ig4-dataviz)

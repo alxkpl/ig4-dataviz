@@ -1,6 +1,6 @@
-# IG4 - Data Visualization
+# Data Visualization
 
-Dépôt `git` en support du cours *IG4 - Data Visualization* reprenant le cours fait par Paul Bastide aux *DO3*.
+Dépôt `git` en support du cours *Data Visualization* reprenant le cours fait par Paul Bastide aux *DO3* et les modifications apportées par Chloé Serre-Combe aux *IG4*
 
 ## Supports de cours
 
