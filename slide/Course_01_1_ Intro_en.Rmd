@@ -1,0 +1,152 @@
+---
+title: "IG4 - Visualisation"
+subtitle: "Introduction"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre Capel"
+output:
+  ioslides_presentation:
+    fig_width: 7
+    fig_height: 4
+  self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- ************************************************************************ -->
+# Some informations
+<!-- ************************************************************************ -->
+
+## Teachers
+
+- Paul Bastide
+    - paul.bastide@umontpellier.fr
+    - Applied statistics, evolution
+
+- Chloé Serre-Combe
+    - chloe.serre-combe@umontpellier.fr
+    - Extreme value theory, spatial statistics
+
+- Alexandre Capel
+    - alexandre.capel@umontpellier.fr
+    - Extreme value theory, graphical model
+
+## Module
+
+* Aim 
+  * how to summarize a data frame ?
+  * especially : how to make the reading of the data easier ?
+
+* Plan 
+  * `Rmarkdown` + `ggplot2` (course 1)  
+  * Visualisation quali/quanti (course 2 + 3)
+  * `shiny` (course 4)
+
+## Exams
+
+I don't know yet, maybe a small practical work or MCQ...
+
+## Data
+
+* [Open Data Montpellier Méditerranée Métropole](https://data.montpellier3m.fr/datasets)
+
+* [data.gouv.fr](https://www.data.gouv.fr/fr/),
+with its [Twitter account](https://twitter.com/datagouvfr)
+
+* [data.europa.eu](https://data.europa.eu/euodp/en/home) and the [European Data Portal](https://www.europeandataportal.eu/en)
+
+* [data.sncf.com](https://data.sncf.com)
+
+* [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday#datasets), on Twitter [#tidytuesday](https://twitter.com/search?q=%23tidytuesday)
+
+* [Five Thirty Eight](https://data.fivethirtyeight.com/)
+and its associated [package](https://CRAN.R-project.org/package=fivethirtyeight) 
+
+* [KD Nuggets](https://www.kdnuggets.com/datasets/index.html)
+
+* ...
+
+## Ressources
+
+* *Fundamentals of Data Visualization*, Claus O. Wilke:
+  * [Book](https://clauswilke.com/dataviz/)
+  * [Course](https://wilkelab.org/SDS375/)
+
+* *Data Visualization, A practical introduction*, Kieran Healy:
+  * [Book](https://socviz.co/)
+
+* Page [GitHub](https://github.com/alxkpl/ig4-dataviz) for the course
+
+## GitHub `ig4-dataviz`
+
+* Based on [repo GitHub of Paul Bastide](https://github.com/pbastide/do3-dataviz) and [de Clhoé Serre-Combe](https://github.com/chloesrcb/ig4-dataviz)
+
+* [Mine](https://github.com/alxkpl/ig4-dataviz)
+
+* The slides are in the folder `slide`
+
+* The practical works are in the folder `TP`
+
+<!-- ************************************************************************ -->
+# R Markdown
+<!-- ************************************************************************ -->
+
+## `Markdown` :  lightweight markup language 
+
+**Input** :
+
+```
+I can write in *italic*, in **bold**, and even `code`.
+
+Thanks to $\LaTeX$, I kwnow the Euler's identity : $e^{i\pi} + 1 = 0$.
+```
+
+**Output** :
+
+I can write in *italic*, in **bold**, and even  `code`.
+
+Thanks to  $\LaTeX$,  I kwnow the Euler's identity : $e^{i\pi} + 1 = 0$.
+
+
+$~$
+**Format** :
+PDF, HTML, documents, slides, ...
+
+## `R Markdown` : Reproducible code
+
+**Input** :
+
+````
+The function `rnorm()` simulate gaussian variables.
+`r ''````{r}
+set.seed(12890926) # seed (Quia Sapientia)
+rnorm(5)           # 5 standard gaussian variables
+`r ''````
+````
+
+**Output** :
+
+The function `rnorm()` simulate gaussian variables.
+```{r}
+set.seed(12890926) # seed (Quia Sapientia)
+rnorm(5)           # 5 standard gaussian variables
+```
+
+
+## `R Markdown` : Reproducible graphics 
+
+The Maunga Whau Volcano (Mt Eden), Auckland, Nouvelle-Zélande
+
+```{r demo}
+filled.contour(volcano, color.palette = terrain.colors, asp = 1)
+```
+
+## `R Markdown`
+
+* [Full introduction](https://rmarkdown.rstudio.com/lesson-1.html)
+
+* [Sheets](https://raw.githubusercontent.com/rstudio/cheatsheets/master/rmarkdown-2.0.pdf)
+
+* [RStudio](https://rstudio.com/)
+
+* Theses slides on [GitHub](https://github.com/alxkpl/ig4-dataviz)
