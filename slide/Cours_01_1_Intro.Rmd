@@ -39,9 +39,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * Plan 
   * `Rmarkdown` + `ggplot2` (séance 1)  
-  * Visualisation quali/quanti (séance 2)
-  * `shiny` (séance 3)
+  * Visualisation quali/quanti (séance 2+3)
+  * `shiny` (séance 4)
 
+## Modalité d'évaluation
+
+Je sais pas encore, peut être un mini TP ou un QCM.
 ## Sources de données
 
 * [Open Data Montpellier Méditerranée Métropole](https://data.montpellier3m.fr/datasets)
