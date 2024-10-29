@@ -1,4 +1,4 @@
-# Data Visualization
+# IG3 - Data Visualization
 
 *English below*
 
