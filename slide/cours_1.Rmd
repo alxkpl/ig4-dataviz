@@ -105,7 +105,7 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 <!-- ************************************************************************ -->
 
 ## C'est quoi ? {.build} 
-<center><img src = "../figures/schema_dataviz.png" width = 65% style = "text-align: right; vertical-align: middle"></img></center>
+<center><img src = "figures/schema_dataviz.png" width = 65% style = "text-align: right; vertical-align: middle"></img></center>
 
 *inspiré du schéma du cours [SDS 375](https://wilkelab.org/SDS375/) de Claus O. Wilke*
 
@@ -115,7 +115,7 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
  
 ## Une idée 
 
-<center><img src = "../figures/iceberg-statistics.jpg" width = 80% style = "text-align: right; vertical-align: middle"></img></center>
+<center><img src = "figures/iceberg-statistics.jpg" width = 80% style = "text-align: right; vertical-align: middle"></img></center>
 
 image emprunté d'un cours de F.Muñoz.
 
@@ -315,7 +315,7 @@ $~$
 
 ## Rappel {.build}
 
-<center><img src = "../figures/schema_dataviz.png" width = 65% style = "text-align: right; vertical-align: middle"></img></center>
+<center><img src = "figures/schema_dataviz.png" width = 65% style = "text-align: right; vertical-align: middle"></img></center>
 
 
 `R` est la solution
@@ -351,7 +351,7 @@ C'est une interface :
 
 L'interface est structuré ainsi : 
 
-<center><img src="../figures/structure.png" height="350px" /></center>
+<center><img src="figures/structure.png" height="350px" /></center>
 
 ## Opérations
 
@@ -448,18 +448,18 @@ Pourquoi faire ce cours ? C'est facile de faire un beau graphique...
 
 ## Vaccins
 
-<center><img src="../figures/graphs/hospitalisation.jpg" height="350px" /></center>
+<center><img src="figures/graphs/hospitalisation.jpg" height="350px" /></center>
 
 
 ## Grèves SNCF
 
-<center><img src="../figures/graphs/greve_sncf_bfm.jpg" height="350px" /></center>
+<center><img src="figures/graphs/greve_sncf_bfm.jpg" height="350px" /></center>
 
 Source : [Libération](https://www.liberation.fr/checknews/2018/04/27/est-ce-que-bfmtv-a-vraiment-affiche-un-graphique-a-camembert-trompeur-sur-le-soutien-a-la-greve-des-_1653615/)
 
 ## Sondages
 
-<center><img src="../figures/graphs/camembert_3D.jpg" height="350px" /></center>
+<center><img src="figures/graphs/camembert_3D.jpg" height="350px" /></center>
 
 $~$
 
@@ -468,7 +468,7 @@ $~$
 
 ## Grèves SNCF
 
-<center><img src="../figures/graphs/greve_sncf.jpg" height="350px" /></center>
+<center><img src="figures/graphs/greve_sncf.jpg" height="350px" /></center>
 
 Source : [Libération](https://www.liberation.fr/checknews/2018/04/27/est-ce-que-bfmtv-a-vraiment-affiche-un-graphique-a-camembert-trompeur-sur-le-soutien-a-la-greve-des-_1653615/) 
 
@@ -476,13 +476,13 @@ Source : [Libération](https://www.liberation.fr/checknews/2018/04/27/est-ce-que
 
 ## Places en médecine
 
-<center><img src="../figures/graphs/medecins_tweet.png" height="500px" /></center>
+<center><img src="figures/graphs/medecins_tweet.png" height="500px" /></center>
 
 Source : Notre ancienne ministre
 
 ## Economic Growth
 
-<center><img src="../figures/graphs/trump.jpg" height="500px" /></center>
+<center><img src="figures/graphs/trump.jpg" height="500px" /></center>
 
 Source : Ce bon vieux Donald
 
