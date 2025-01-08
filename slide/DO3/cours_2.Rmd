@@ -1,0 +1,376 @@
+---
+title: "DO3 - Communication"
+subtitle: "Statistiques descriptives"
+date: "2025-01-13"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre Capel"
+output:
+  ioslides_presentation:
+    fig_width: 7
+    fig_height: 4
+  self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Avant de commencer les statistiques {.build}
+
+<br> \newline
+
+`R`-Studio est une interface pratique et complète.
+
+<br> \newline
+
+$\hookrightarrow$ permet de rédiger des rapports automatisés avec les fichiers `Rmd`.
+
+$\hookrightarrow$ fait de très beaux graphiques.
+
+<!-- ************************************************************************ -->
+# R Markdown
+<!-- ************************************************************************ -->
+
+## Un nom étonnant {.build}
+
+`R`-markdown est un mix entre : 
+
+- le langage `R` 
+
+- le format `Markdown`
+
+
+## `Markdown` 
+
+Il s'agit d'un langage à balises permettant de produire différents types de fichier.
+
+$~$
+**Format** :
+PDF, HTML, documents, diapos, ...
+
+
+## Balises classiques {.build}
+
+
+- pour écrire *en italique*, il faut écrire ````*comme ça*````.
+
+<br> \newline
+
+- pour écrire **en gras**, il faut écrire ````**comme ça**````.
+
+<br> \newline
+
+- pour écrire `des portions de code`, il faut écrire ```` `comme ça` ````.
+
+<br> \newline
+
+- si vous savez faire du $\LaTeX$, il faut écrire ````$comme ça$````.
+
+
+## Exemple concret 
+**Entrée** :
+
+```
+Je peux écrire en *italique*, en **gras**, et même du `code`.
+
+Grâce au $\LaTeX$ je connais l'identité d'Euler : $e^{i\pi} + 1 = 0$.
+```
+
+**Sortie** :
+
+Je peux écrire en *italiques*, en **gras**, et même du `code`.
+
+Grâce au $\LaTeX$, je connais l'identité d'Euler : $e^{i\pi} + 1 = 0$.
+
+## Structure 
+
+Pour mieux structurer vos rapports, les titres, sous-titres se font à l'aide de `#` : 
+
+- un seul (`# Titre`) pour les titres.
+
+- deux (`## Sous-titre`) pour les sous-titres.
+
+- trois (`### Sous-sous-titre`) pour les sous-sous-titres. 
+
+- etc....
+
+
+## `R Markdown` 
+
+Permet d'ajouter du code reproductible aux rapports `Markdown` via ce que l'on appelle des cellules (*chunks* en anglais).
+
+## Exemple de code 
+
+**Entrée** :
+
+````
+La fonction `rnorm()` simule des gaussiennes.
+`r ''````{r}
+set.seed(12890926) # graine (Quia Sapientia)
+rnorm(5)           # 5 gaussiennes centrées réduites
+`r ''````
+````
+
+**Sortie** :
+
+La fonction `rnorm()` simule des gaussiennes.
+```{r, echo=TRUE}
+set.seed(12890926) # graine (Quia Sapientia)
+rnorm(5)           # 5 gaussiennes centrées réduites
+```
+
+
+## `R Markdown`
+
+il est aussi possible d'afficher directement des graphiques (utile pour la suite ;) ) 
+
+## Exemple d'affichage
+
+Le volcan Maunga Whau (Mt Eden), Auckland, Nouvelle-Zélande
+
+```{r demo}
+filled.contour(volcano, color.palette = terrain.colors, asp = 1)
+```
+
+## Paramètres des cellules 
+
+
+- `echo = TRUE/FALSE` : affiche le code dans la sortie. 
+
+- `eval = TRUE/FALSE` : fait compiler le code. 
+
+- `fig.align = 'default'/'left'/'right'/'center'` : localisation de la figure.
+
+- `fig.height` ou `fig.width` : taille des sorties de figure.
+
+- `cache=TRUE/FALSE` : permet de ne pas recompiler les codes lorsque que l'on compile plusieurs fois le fichier `.Rmd`.
+
+
+## `R Markdown`
+
+* [Introduction complète](https://rmarkdown.rstudio.com/lesson-1.html)
+
+* [Fiche résumée](https://raw.githubusercontent.com/rstudio/cheatsheets/master/rmarkdown-2.0.pdf)
+
+* [RStudio](https://rstudio.com/)
+
+* Ces diapos sur [GitHub](https://github.com/alxkpl/ig4-dataviz)
+
+
+# La librairie ggplot2
+
+## `ggplot2`
+
+* Créé par Hadley Wickham en 2005.
+
+* Page [wikipedia](https://en.wikipedia.org/wiki/Ggplot2).
+
+* [Réference complète](https://ggplot2.tidyverse.org/index.html)
+
+* [Fiche résumée](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)
+
+* C'est une librairie `R` stardard.
+
+```{r ggplot2, eval = FALSE}
+install.packages("ggplot2")
+```
+
+```{r ggplot2-2, eval = TRUE}
+library("ggplot2")
+```
+
+## Grammar of Graphics
+
+* Un système cohérent pour faire des graphiques [ref](http://vita.had.co.nz/papers/layered-grammar.pdf).
+
+* "Layered aesthetic mappings" : "couches" de choix esthétiques.
+
+* On choisit un mode de représentation pour chaque composante du jeu de données.
+
+## Syntaxe classique 
+
+<br> \newline
+<br> \newline
+
+````
+> ggplot(données) 
+>  + aes(structure_du_graphe) 
+>  + type_de_graphe() 
+>  + autres_paramètres()
+````
+
+<!-- ************************************************************************ -->
+# Exemples
+<!-- ************************************************************************ -->
+
+## Données climatiques
+
+* Températures moyennes journalières [ECAD](https://www.ecad.eu/dailydata/index.php) (1950 - 2019)
+
+```{r temp, message = FALSE}
+library(here)
+temps_average <- read.csv(file = here("data",
+                                      "temp_average.csv"))
+head(temps_average)
+```
+
+## Données climatiques - Graphique
+
+Il faut choisir comment coder chaque information.
+
+```{r temp_1, message = FALSE, echo=FALSE}
+temps_average[c(c(1, 2), 366 + c(1, 2), 366*2 + c(1, 2)),]
+```
+
+"aestetics" possibles:
+
+  * Abscisses `x`
+  * Ordonnées `y`
+  * Couleurs `color`
+  * ...
+
+## Données climatiques - Graphique
+
+Il faut choisir comment coder chaque information.
+
+```{r temp_2, message = FALSE, echo=FALSE}
+temps_average[c(c(1, 2), 366 + c(1, 2), 366*2 + c(1, 2)),]
+```
+
+"aestetics" possibles:
+
+<div class="columns-2">
+  * Abscisses `x`
+  * Ordonnées `y`
+  * Couleurs `color`
+
+$~$
+
+  * `day_of_year`
+  * `temperature`
+  * `city`
+</div>
+
+## Données climatiques - Graphique
+
+Il faut choisir comment coder chaque information.
+
+```{r, message = FALSE, echo=FALSE}
+temps_average[c(c(1, 2), 366 + c(1, 2), 366*2 + c(1, 2)),]
+```
+
+
+
+```{r format, echo = FALSE}
+month_names <- c(
+  "01" = "Jan", "02" = "Feb", "03" = "Mar", "04" = "Apr", "05" = "May", "06" = "Jun",
+  "07" = "Jul", "08" = "Aug", "09" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec"
+)
+month_days <- c(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+month_days_cum <- c(0, cumsum(month_days))
+```
+
+```{r, echo = TRUE, eval=FALSE}
+ggplot(temps_average) +
+  aes(x = day_of_year, y = temperature, color = city) +
+  geom_line(linewidth = 1) +
+  scale_x_continuous(name = "day of the year",
+                     breaks = month_days_cum[-13] + 1,
+                     labels = month_names) +
+  theme_light()
+```
+
+## Données climatiques - y
+
+
+
+```{r temp-plot, echo = FALSE, fig.align='center'}
+ggplot(temps_average, aes(x = day_of_year, y = temperature, color = city)) +
+  geom_line(linewidth = 1) +
+  scale_x_continuous(name = "day of the year",
+                     breaks = month_days_cum[-13] + 1,
+                     labels = month_names) +
+  theme_light()
+```
+
+* `y` contient l'information sur la `temperature`.
+* `color` contient l'information sur la `city`.
+
+## Données climatiques - Graphique
+
+Il faut choisir comment coder chaque information.
+
+```{r temp_3, message = FALSE, echo=FALSE}
+temps_average[c(1, 366 + c(1, 2), 366*2 + c(1, 2)),]
+```
+
+"aestetics" possibles:
+
+<div class="columns-2">
+  * Abscisses `x`
+  * Ordonnées `y`
+  * Couleurs `color`
+
+$~$
+
+  * `day_of_year`
+  * `city`
+  * `temperature`
+</div>
+
+
+## Données climatiques - Graphique
+
+Il faut choisir comment coder chaque information.
+
+```{r temp_4, message = FALSE, echo=FALSE}
+temps_average[c(1, 366 + c(1, 2), 366*2 + c(1, 2)),]
+```
+
+```{r, echo = TRUE, eval=FALSE}
+ggplot(temps_average) +
+  aes(x = day_of_year, y = city, color = temperature) + 
+  geom_point(size = 5) +
+  scale_x_continuous(name = "day of the year",
+                     breaks = month_days_cum[-13] + 1,
+                     labels = month_names) + 
+  scale_color_viridis_c(option = "B", begin = 0.15,
+                        end = 0.98,name = "temperature") + 
+  theme_light()
+```
+
+## Données climatiques - color
+```{r temp-plot-2, echo = FALSE, fig.align='center'}
+ggplot(temps_average, aes(x = day_of_year, y = city, color = temperature)) + 
+  geom_point(size = 5) +
+  scale_x_continuous(name = "day of the year",
+                     breaks = month_days_cum[-13] + 1,
+                     labels = month_names) + 
+  scale_color_viridis_c(
+    option = "B", begin = 0.15, end = 0.98,
+    name = "temperature"
+  ) + 
+  theme_light()
+```
+
+* `y` contient l'information sur la `city`.
+* `color` contient l'information sur la `temperature`.
+
+## Aesthetiques communes {.smaller}
+
+<center><img src="../figures/common-aesthetics-1.png" width = 90%/></center>
+
+Figure tirée de [Claus O. Wilke. *Fundamentals of Data Visualization.* O'Reilly, 2019.](https://clauswilke.com/dataviz)
+
+
+## Références
+
+- *Fundamentals of Data Visualization*:  
+[Chapter 2: Visualizing data](https://clauswilke.com/dataviz/aesthetic-mapping.html)
+- *Data Visualization—A Practical Introduction*:  
+[Chapter 3: Make a plot](https://socviz.co/makeplot.html#makeplot)
+- [**ggplot2** reference documentation](https://ggplot2.tidyverse.org/reference/index.html)
+- [**ggplot2** book](https://ggplot2-book.org/)
+- [**ggplot2** cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+
+

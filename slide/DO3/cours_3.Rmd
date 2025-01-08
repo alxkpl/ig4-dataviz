@@ -1,0 +1,277 @@
+---
+title: "DO3 - Formatage de tableaux de données"
+subtitle: "Statistiques descriptives"
+date: "2025-01-15"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre Capel"
+output:
+  ioslides_presentation:
+    fig_width: 7
+    fig_height: 4
+  self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+pacman::p_load(ggplot2,
+               dplyr, 
+               tidyr, 
+               tibble)
+```
+
+
+<!-- ************************************************************************ -->
+# Approfondissement sur `ggplot`
+<!-- ************************************************************************ -->
+
+## Un graphique sympa
+
+Pendant le dernier TP, vous avez pu créer le graphique suivant : 
+
+```{r premier, echo=FALSE, fig.align = 'center'}
+#| fig.cap: Votre premier graphique (normalement).
+library(ggplot2)
+x <- seq(-1, 1, 0.01)
+ggplot() +
+  aes(x = x, y = x**2) + 
+  geom_line(col = "darkblue") +
+  labs(title = "Fonction carré sur [-1,1]", x = "x", y = expression(x^2)) + 
+  theme_minimal()
+```
+
+## Apprendre à enrichir le graphique
+
+Mais si j'avais besoin de mettre plusieurs courbe dans le même graphique comment je peux faire ?
+
+## Nouveau graphique {.build}
+
+J'aimerais maintenant tracer tous les monômes de degré 2 à 5 sur le même graphique. 
+
+<br> \newline
+
+<center> **Mais comment faire ??? :(** </center>
+
+<br> \newline
+
+Heureusement, `ggplot` est trop puissant et nous permet de faire ce que l'on souhaite à conditon d'avoir un jeu de données sous le bon format. 
+
+
+## Jeu de données
+
+Voilà les valeurs sur $[-1,1]$ des monômes pour chaque degré.
+
+```{r creation}
+n <- length(x)
+data <- data.frame(x = rep(x, 4), 
+                   valeur = c(x**2, x**3, x**4, x**5),
+                   degré = factor(c(rep(2, n), rep(3, n), rep(4, n), rep(5, n))))
+
+print(data[c(1,2, n + c(1, 2), 2*n + c(1, 2), 3*n + c(1, 2)), ])
+```
+
+Pour séparer en plusieurs courbe pour chaque monome, on utilise l'argument `color` de `aes()`.
+
+## Graphique final 
+
+```{r all-graph, echo = TRUE, fig.align='center',  fig.height=3, fig.width=6}
+ggplot(data) + 
+  aes(x = x, y = valeur, color = degré) + 
+  geom_line() + 
+  labs(title = "Fonctions monôme sur [-1,1] pour différents degrés",
+       x = "x", y = expression(x^n), color = "n")
+```
+
+## Graphique alternatif
+
+On peut aussi séparer chaque graphique (avec `facet_wrap()`) : 
+
+```{r facet, echo = TRUE, fig.align='center',  fig.height=3, fig.width=6}
+ggplot(data) + 
+  aes(x = x, y = valeur, color = degré) + 
+  geom_line(show.legend = F) + facet_wrap(~degré, scales = "free_y") +
+  labs(title = "Fonctions monôme sur [-1,1] pour différents degrés",
+       x = "x", y = expression(x^n)) 
+
+```
+
+## Très bien mais...{.build}
+
+Imaginons maintenant que le tableau de données soit comme ceci : 
+
+```{r tableau}
+data.frame(x = x, x_2 = x**2, x_3 = x**3, x_4 = x**4, x_5 = x**5) |> head()
+```
+
+Le code de tout à l'heure ne marche plus...
+
+# Formatage de jeux de données
+
+## SQL
+
+Un langage vachement pratique pour faire de la base de données et pour formater ces derniers est le `SQL`. 
+
+$\hookrightarrow$ inutilisable de manière brute sur `R`...
+
+
+Mais il existe des packages utiles qui reproduisent les commandes `SQL`directement en temps réel.
+
+## Le monde de `tidyverse` {.build} 
+
+$\hookrightarrow$ regroupe plusieurs libraries utiles pour les sciences des données :
+
+- `ggplot2` que vous connaissez déjà.
+
+- `tibble` utilisation un type autre que `data.frame` qui nécessite avoir une bonne hygiène dans la manipulation des données.
+
+- `dplyr` regroupe toute une grammaire pour manipuler des jeux de données.
+
+- `tidyr` pour pouvoir bien structurer les jeux de données (compatible avec `tibble`)
+
+## Quelques commandes `dplyr`
+
+- `select()` : va sélectionner un sous-ensemble de variable (donc les colonnes) que vous avez choisi.
+
+- `filter()` : va sélectionner les individus qui vérifie une condition.
+
+- `mutate()` : crée une nouvelle colonne, calculable à partir des variables du jeu de données.
+
+## Exemple
+
+
+Prenons ce jeu de données simple : 
+```{r}
+data <- tibble(x = x, x_2 = x**2)
+data[1:10, ]
+```
+
+## Exemple 1
+
+On aimerait prendre uniquement l'image de la fonction entre $[0,1]$ : 
+
+```{r filter, echo = TRUE}
+head(filter(data, x>=0))
+```
+
+## Exemple 2
+
+On aimerait ajouter une nouvelle colonne représentant la fonction $x \mapsto x^2+x$ : 
+
+```{r ex1, echo=TRUE}
+head(mutate(data, new = x + x_2))
+```
+
+## Exemple 3 
+
+
+On aimerait sélectionner juste la colonne `x_2` : 
+
+```{r ex2, echo=TRUE}
+head(select(data, x_2))
+```
+
+## Exemple plus compliqué
+
+On aimerait sélectionner la nouvelle fonction définie uniquement sur $[0,1]$ avec la valeur de $x$ correspondante : 
+
+```{r ex3, echo=TRUE}
+head(select(filter(mutate(data, new = x + x_2), x >= 0), x, new))
+```
+
+(là, ça commence à être dur de suivre le code...)
+
+## Le pipe
+
+Il existe un moyen de rendre plus lisible toute ces commandes : le **pipe**. 
+
+## Le pipe {.build}
+
+Le pipe `|>` est une commande qui permet d'envoyer un élément dans le premier argument d'une fonction. 
+
+```{r pipe, eval=FALSE, echo = TRUE}
+var1 |> fonction(arg2 = var2, ...)
+# est la même chose que 
+fonction(arg1 = var1, arg2 = var2, ...)
+```
+
+$\hookrightarrow$ facilite la lisibilité, surtout quand on enchaîne des commandes `dplyr` 
+
+## Exemple précédent {.build} 
+
+La commande : 
+
+```{r ex-pipe1, eval = FALSE, echo=TRUE}
+select(filter(mutate(data, new = x + x_2), x >= 0), x, new)
+```
+
+équivaut à :
+
+```{r ex-pipe2, eval = FALSE, echo=TRUE}
+data |> 
+  mutate(new = x + x_2) |>    # création nouvelle variable
+  filter(x >= 0) |>           # filtrage sur les lignes où x >= 0
+  select(x, new)              # sélection des variables intéressantes
+```
+
+<center> Bien plus lisible je trouve. </center>
+
+## Code compact 
+
+Le pipe est utilisable partout, même sur `ggplot` :
+
+```{r ex-ggplot, echo=TRUE, fig.align='center',  fig.height=3, fig.width=6}
+data |> mutate(new = x + x_2) |>
+  filter(x >= 0) |> select(x, new) |> 
+  ggplot() + aes(x = x, y = new) + geom_line(col = "darkblue") +
+    labs(x = "x", y = expression(x^2 + x), title = "New function")
+```
+
+## Retour sur le jeu de données
+
+Comment régler ce problème de `ggplot` ?
+
+```{r rappel, echo = TRUE}
+data2 <- data.frame(x = x, x_2 = x**2, x_3 = x**3, x_4 = x**4, x_5 = x**5)
+head(data2)
+```
+
+## Une commande `tidyr` pratique
+
+Dans la librairie `tidyr`, il y a une fonction pratique nommé `pivot_longer()`.
+
+$\hookrightarrow$ permet de fusionner des colonnes en unique variable.
+
+$\hookrightarrow$ crée une nouvelle variable indiquant de quelle variable la valeur provient.
+
+
+## Utilisation sur notre exemple 
+
+```{r pivot-longer, echo=TRUE}
+data2 |>
+  pivot_longer(cols = c(x_2, x_3, x_4, x_5)) |> head()
+```
+
+On a donc les 4 variable qui ont fusionné en une variable `value` et on a crée une autre variable `name`, dite "informative", qui nous indique d'où provient la valeur de la ligne.
+
+## Quelques arguments utiles
+
+Il y a des arguments supplémentaires facilitant ensuite la construction du `ggplot` : 
+
+- `values_to=` : pour indiquer le nom de la variable fusionnée.
+
+- `names_to=` : pour indiquer le nom de la variable informative.
+
+- `names_prefix=` : utile pour supprimer le début des variables initiales lors de leur transcription en modalités de la variable informative.
+
+
+
+## Version finale 
+
+```{r pivot-longer-final, echo=TRUE}
+data2 |>
+  pivot_longer(cols = starts_with("x_"),   
+               values_to = "Valeurs",     
+               names_to = "Degré",         
+               names_prefix = "x_") |>    
+  filter(x == -1)
+```
+
+et on retombe sur le même tableau que tout à l'heure qui est compatible avec une utilisation de `ggplot`.
