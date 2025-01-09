@@ -1,0 +1,295 @@
+---
+title: "TP1 - Communication des résultats avec `R`-markdown"
+author: "CAPEL Alexandre"
+date: "2025-01-13"
+output: 
+  pdf_document:
+    number_sections: true
+abstract: >
+  L'objectif principal de ce TP est d'apprendre à produire le genre de document que vous êtes en train de lire en utilisant les fichier `.Rmd`. De plus, on commencera également à utiliser `ggplot` en produisant des graphiques simples et basiques en utilisant la syntaxe de base. 
+header-includes:
+  \renewcommand{\abstractname}{ }
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# `R`-markdown
+
+`R Markdown` permet de créer des documents dynamiques, qui incluent du texte mis
+en forme, des équations, et du code `R`.
+
+Cet outil est très utile pour écrire des rapports techniques.
+Il permet, dans un seul document, d'exposer le contexte du problème,
+la méthode de résolution, et les résultats de l'analyse.
+
+De nombreuses ressources sont disponibles en ligne.
+Voir par exemple 
+[\color{blue}{l'introduction officielle}](https://rmarkdown.rstudio.com/lesson-1.html)
+à `R markdown`, ainsi que la [\color{blue}{fiche synthétique}](https://raw.githubusercontent.com/rstudio/cheatsheets/master/rmarkdown-2.0.pdf).
+
+## Installation
+
+Pour utiliser `R markdown`, il suffit d'installer la librairie associée de la même manière que l'on a appris dans le TP0. Le nom du package est `rmarkdown` (tout en minuscule).
+
+## Création d'un document
+
+Une fois l'installation effectuée, le plus simple est de créer un nouveau 
+document en utilisant l'interface de `RStudio`.
+
+Sélectionner le menu:
+```
+File > New File > R markdown...
+```
+
+Dans l'onglet `Document` (sélectionné par défaut), vous pouvez saisir le titre
+et la, le ou les auteur·e·s du document.
+
+Trois formats sont proposés:
+
+* `HTML`: permet une mise en forme dynamique, utile pour les sites internet.
+
+* `PDF`: permet une mise en forme fixe, utile pour un rendu "officiel" ou papier.
+
+* `Word`: permet de générer des documents éditables, qui peuvent ensuite être
+partagés avec des collaborateurs ou collaboratrices.
+
+Pour cette séance, on choisi le format `HTML`, le plus simple pour la mise en page.
+
+## Premier document
+
+Une fois le document créé, `RStudio` propose un contenu "didactique" par défaut.
+
+Vous pouvez compiler ce document en cliquant sur la commande 
+`Knit` en haut à gauche, à côté d'une pelote de laine bleue
+(en anglais, "to knit" signifie "tricoter").
+
+Si tout fonctionne bien, `RStudio` va générer un document `HTML`, qu'il ouvre
+dans une nouvelle fenêtre.
+
+Vous pouvez étudier ce premier document, et voir comment la source (le `.Rmd`)
+influe sur la sortie (le `.html`).
+
+## Rudiments de `markdown` 
+
+Comme expliqué dans le cours, le format `markdown` permet l'utilisation de pleins d'éléments de personnalisation facilement. Notamment on peut changer de format à l'aide de `*` : 
+
+- pour écrire *en italique*, il faut écrire ````*comme ça*````.
+
+- pour écrire **en gras**, il faut écrire ````**comme ça**````.
+
+- pour écrire `des portions de code`, il faut écrire ```` `comme ça` ````.
+
+- si vous savez faire du \LaTeX, il faut écrire ````$comme ça$````.
+
+Pour écrire des titres, des sous titres etc... on utilise le symbole `#` : 
+
+````
+# Titre 1
+## Sous-titre 1.1 
+## Sous-titre 1.2
+...
+# Titre 2
+## Sous-titre 2.1
+...
+````
+
+ressemble à ça après compilation : 
+
+# Titre 1 {-}
+## Sous-titre 1.1 {-}
+## Sous-titre 1.2 {-}
+$\dots$
+
+# Titre 2 {-}
+## Sous-titre 2.1 {-}
+$\dots$
+
+*Attention, le nom d'extension de ce fichier est `.Rmd` et non `.R` c'est pour cela que le `#` n'est pas interpréter comme le début d'un commentaire.*
+
+\newpage 
+
+On peut également faire des liens avec : 
+
+- des sites internet.
+
+- des fichiers/images de votre répertoire local.
+
+par exemple écrire cela dans le fichier `.Rmd` : 
+
+````
+[\color{blue}{lien vers un site}](https://www.saagie.com/fr/blog/r-le-langage-roi-en-statistiques/)
+````
+permet d'écrire un [\color{blue}{lien vers un site}](https://www.saagie.com/fr/blog/r-le-langage-roi-en-statistiques/).
+
+ou bien écrire : 
+````
+![Mon chat vérifie si vous faites le TP.](../slide/figures/mon_chat.png){width=35%}
+````
+pour avoir une image par exemple : 
+
+![Mon chat vérifie si vous faites le TP.](../slide/figures/mon_chat.png){width=35%}
+
+> **Exercice.** Essayez d'afficher deux liens, un site et une image de votre choix, dans votre fichier `.Rmd`.
+
+## Inclure du code `R`
+
+Si on avait juste besoin de markdown, autant juste utiliser des fichiers `.md`. Seulement, on fait un cours de statistiques et de visualisation des données, donc on aimerait bien parsemer nos rapports de codes et de graphiques. 
+
+Pour cela, il faut faire utiliser des **cellules** dans le fichier `.Rmd` qui indiquera au moment de la compilation lorsqu'il s'agit de portion de code ou juste du texte. La syntaxe est la suivante : 
+
+````
+`r ''````{r}
+des commandes R
+`r ''````
+````
+
+*Il existe un bouton qui permet d'écrire cette structure automatiquement : c'est le bouton vert avec un "c" à l'intérieur (sélectionner ensuite `R` pour pouvoir produire du code `R`).* \newline 
+
+Ces cellules sont très pratiques : elles permettent de compiler directement des codes `R` en suivant la structure du rapport, ce qui peut être très utile pour présenter vos résultats. Il existe bien sûr des paramètres que l'on peut utiliser pour rendre les rapports plus personnalisable. Les options s'ajoutent comme ceci dans les cellules :
+
+````
+`r ''````{r nom_cellule, option1=valeur1, option2=valeur2, ...}
+des commandes R
+`r ''````
+````
+
+*Prenez l'habitude de nommez vos différentes cellules, comme ça lorsqu'il y a des erreurs de compilation du à votre code, vous saurez dans quel cellule regarder l'erreur.* \newline
+
+Enfin, on peut utiliser la valeur de variables directement dans le texte (sous réserve d'avoir bien déclarer la variable plus haut dans le fichier `.Rmd`). 
+
+```{r}
+a <- 17
+```
+
+Si on écrit ```` `r ''`r a` `r '' ````, on peut voir la valeur de `a` directement dans le texte et il vaut `r a`.
+
+## Exemple
+
+Supposons que l'on mène l'expérience suivante.  
+Une urne contient 300 boules, 100 rouges, 100 bleues et 100 vertes.  
+On tire une boule au hasard, on note sa couleur, et on la met de côté.  
+On reproduit cette expérience 60 fois.  
+
+Avec `R`, on peut simuler cette expérience aléatoire de la façon suivante.
+
+```{r boules-experience}
+set.seed(1289)                         ## Reproductibilité
+
+urne <- c(rep("rouge", 100),           ## repète 100 fois la chaîne de caractère "rouge"
+          rep("bleue", 100),           ## idem avec "bleu"
+          rep("verte", 100))           ## idem avec "vert"
+
+n_exp <- 60                            ## Nombre de fois où je fais l'expérience
+
+echantillon <- sample(urne,            ## échantillonne les boules
+                      n_exp,           ## n_exp fois
+                      replace = FALSE) ## sans remise
+```
+
+On peut ensuite afficher un résumé de l’expérience
+(nombre de fois où chaque boule a été tirée).
+
+```{r boules-resultats}
+res <- table(echantillon)             ## Résumé de l'échantillon
+res
+```
+
+Ainsi, sur les `r n_exp` expériences, on a tiré ici `r res[1]` fois la boule bleue.
+
+
+# `ggplot2`
+
+`ggplot2` est une implémentation de la
+[\color{blue}{"grammaire des graphiques"}](https://en.wikipedia.org/wiki/Ggplot2),
+et permet de tracer des figures scientifiques précises et informatives
+de manière aisée dans `R`.
+
+De nombreuses ressources sont disponibles en ligne.
+Voir par exemple
+[\color{blue}{la documentation officielle}](https://ggplot2.tidyverse.org/index.html),
+ainsi que la [\color{blue}{fiche synthétique}](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf).
+
+## Installation 
+
+Il s'agit bien entendu d'une librairie `R`, donc il faut l'installer si vous n'avez pas fait le TP de la semaine dernière.
+
+Ensuite, il faudra charger la librairie dans le rapport en créant une cellule spécifique. 
+```{r importation}
+library(ggplot2)
+```
+
+*Ici j'affiche le code pour l'apprentissage, mais dans vos futurs rapports ce ne sera pas nécessaire, utilisez l'option `echo=FALSE` dans la cellule.*
+
+## Premier graphique
+
+On aimerait tracer la fonction $x \mapsto x^2$. On veut donc tracer:
+
+* la colonne $x^2$ en `y` (ordonnées)
+
+* la colonne $x$ en `x` (abscisse).
+
+On utilise pour cela la fonction `ggplot`, suivant le squelette suivant:
+
+```{r temperatures-plot-y, eval = FALSE}
+ggplot(---) +
+  aes(x = ---, y = ---) +              
+  geom_---()                     
+```
+
+La fonction `ggplot` prend en entrée les données, puis l'"esthétique", donnée par `aes`.
+
+Les fonctions `geom_---` indiquent ce qu'il faut tracer.
+Vous pouvez par exemple tester ici `geom_line` ou `geom_point`.
+
+> **Exercice.** Créez un data frame à deux variables où : la première colonne appelée `x` contient les valeurs entre $-1$ et $1$ avec un pas de $0,01$ (utilisez la fonction `seq()`) et la deuwième colonne appelée `x_square` contient les éléments de `x` au carré.
+À partir de ce jeu de données, tracer la courbe correspondante en utilisant le squelette ci-dessus.
+
+## Couches supplémentaires
+
+Ce premier graphe est pas mal, mais encore incomplet. On aimerait peut être changer le titre des axes, et même créer un titre. 
+
+Pour ce faire, il faut ajouter des couches supplémentaires. Déclarez une variable contenant votre graphe : 
+
+```{r var_plot, eval=FALSE}
+mon_graphe <- ggplot(---) +
+                aes(x = ---, y = ---) +              
+                geom_---() 
+```
+
+Pour ajouter ces couches supplémentaires, il suffit de mettre `+` et écrire la couche que vous voulez ajouter pour complexifier votre graphe. 
+
+par exemple : 
+
+```{r exemple, eval=FALSE}
+mon_graphe +
+  xlab("---") +
+  ylab("---") +
+  ggtitle("---")
+```
+
+*On peut également utiliser la couche `labs(x = "---", y = "---", title = "---")` qui regroupe pleins de couches en une seule.*
+
+Il existe pleins d'autres éléments de personnalisation que je présenterai dans un cours ultérieur (ou vous pouvez les chercher dans la [\color{blue}{fiche résumée}](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)).
+
+> **Exercice.** Reprenez le script du TP0 et faites en un rapport `.Rmd` avec les codes et les réponses aux questions (sortie `.html` ou `.pdf`). 
+
+
+# Annexe - Compiler en un fichier `.pdf` {-}
+
+Pour pouvoir compiler des documents `pdf`, vous aurez besoin de \LaTeX.
+Si vous ne l'avez pas déjà sur votre machine,
+vous pouvez télécharger la distribution complète (assez lourde) de \LaTeX adaptée à votre machine,
+en passant par `apt-get` ou autre gestionnaire de logiciel.
+Vous pouvez aussi installer une version minimale, qui suffit pour compiler des documents
+au format `pdf`, en installant le package [`tinytex`](yihui.org/tinytex/):
+
+```{r install-rmd, eval = FALSE}
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+Normalement après ça devrait marcher, sinon vous savez qui aller voir...
+

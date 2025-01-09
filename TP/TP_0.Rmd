@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Installation de `R` et `R`-Studio
 
-Pour commencer et utiliser l'interface de `R`-Studio, il faut au préalable télécharger votre propre version de `R` qui n'est pas directement fourni par le logiciel... 
+Pour utiliser l'interface de `R`-Studio, il faut au préalable télécharger votre propre version de `R` qui n'est pas directement fournie par le logiciel... 
 
 Pas de panique les deux installations sont normalement assez simples (mais surtout gratuites...).
 
@@ -38,7 +38,7 @@ Bien sur, selon votre système d'exploitation, le téléchargement n'est pas le 
 
 - **sous Windows** : utilisez le lien suivant  [\color{blue}{https://cran.r-project.org/bin/windows/base/}](https://cran.r-project.org/bin/windows/base/), cliquez sur le bouton de téléchargement, puis laissez vous guider. Bien sûr, prenez garde à avoir les droits d'administrateur pour pouvoir installer le logiciel.
 
-- **sous macOS** : allez sur le site du [\color{blue}{CRAN}](https://cran.r-project.org) et cliquez sur le lien "Download R for macOS". Cliquer sur la version la plus récente ("For Apple silicon Macs"). Laissez vous ensuite guider pour l'installation.
+- **sous macOS** : allez sur le site du [\color{blue}{CRAN}](https://cran.r-project.org) et cliquez sur le lien "Download R for macOS". Cliquez sur la version la plus récente ("For Apple silicon Macs"). Laissez vous ensuite guider pour l'installation.
 
 - **sous Linux** : allez sur le site du [\color{blue}{CRAN}](https://cran.r-project.org) et cliquez sur le lien "Download R for Linux". Ensuite, choisissez la manière correspondante à votre distribution et un tutoriel avec des lignes de commande guidera votre installation (je suis une bille à Linux par contre donc si ça ne suffit pas, demandez à ChatGPT).
 
@@ -46,9 +46,9 @@ Bien sur, selon votre système d'exploitation, le téléchargement n'est pas le 
 
 `R`-Studio est un logiciel qui permet de coder avec le langage `R` autrement que via un terminal de commande ou juste un éditeur de texte. Il possède également de nombreux outils facilitant la manipulation, la visualisation et le développement de package. 
 
-Pour télécharger `R`-Studio, cliquer sur le lien suivant [\color{blue}{https://posit.co/downloads/}](https://posit.co/downloads/) et télécharger le logiciel via la cellule "DOWNLOAD RSTUDIO" (pas ce lui avec "SERVER").
+Pour télécharger `R`-Studio, cliquez sur le lien suivant [\color{blue}{https://posit.co/downloads/}](https://posit.co/downloads/) et téléchargez le logiciel via la cellule "DOWNLOAD RSTUDIO" (pas celui avec "SERVER").
 
-Suivez les instructions, puis une fois l'installtion terminée, ouvrez le logiciel.
+Suivez les instructions, puis une fois l'installation terminée, ouvrez le logiciel.
 
 
 # Présentation et prise en main de `R`-Studio
@@ -69,7 +69,7 @@ Vous pouvez utiliser la console pour écrire des commandes simples, la sortie se
 
 *Pour remonter dans l'historique des commandes, il suffit d'appuyer sur la flèche du haut.*
 
-Cependant, on aimerait bien rédiger des codes plus complexes sur plusieurs lignes. Pour cela, on a besoin de créer un nouveau script (extension `.R`). Pour ce faire, il suffit d'appuyer sur le petit carré blanc $+$ vert, situé en haut  gauche de l'interface. Cliquer ensuite sur "R script" et normanelent un cript `R` vierge s'est ouvert comme ceci :  
+Cependant, on aimerait bien rédiger des codes plus complexes sur plusieurs lignes. Pour cela, on a besoin de créer un nouveau script (extension `.R`). Pour ce faire, il suffit d'appuyer sur le petit carré blanc avec $+$ vert, situé en haut  gauche de l'interface. Cliquez ensuite sur "R script" et normalement un script `R` vierge s'est ouvert comme ceci :  
 \newpage
 ![Interface avec script vierge](../slide/figures/structure_script.png){width=85%}
 
@@ -80,7 +80,8 @@ Cependant, on aimerait bien rédiger des codes plus complexes sur plusieurs lign
 ## Déclaration de variables
 
 ### Variables numériques
-On rappelle que l'on peut déclarer une varaible de la manière suivante : 
+
+On rappelle que l'on peut déclarer une variable de la manière suivante : 
 
 ```{r var, eval=FALSE, echo=TRUE}
 a <- 2
@@ -88,9 +89,9 @@ a <- 2
 a = 2
 ```
 
-Bien sur, il est nécessaire de compiler cette commande afin d'enregistrer les modifications. Pour compiler une ligne dans un script, il faut d'abord placer le curseur sur la ligne correspondante puis on appuie sur le bouton "Run" situé en haut à droite du script. (Si vous voulez compiler plusieurs lignes d'un coup, il faut sélectionner les lignes correspondantes puis appuyer sur "Run").
+Bien sûr, il est nécessaire de compiler cette commande afin d'enregistrer les modifications. Pour compiler une ligne dans un script, il faut d'abord placer le curseur sur la ligne correspondante puis on appuie sur le bouton "Run" situé en haut à droite du script. (Si vous voulez compiler plusieurs lignes d'un coup, il faut sélectionner les lignes correspondantes puis appuyer sur "Run").
 
-> **Exercice.** Créer une variable $n$ prenant pour valeur 10. Que se passe-t-il dans l'onglet "Environment" ?
+> **Exercice.** Créez une variable $n$ prenant pour valeur 10. Que se passe-t-il dans l'onglet "Environment" ?
 
 ### Variables booléennes 
 
@@ -101,7 +102,7 @@ TRUE
 FALSE
 ```
 
-*Bien sur, il y a une correspondance numérique à chacune de ces valeurs. `FALSE` correspond à la valeur 0 et `TRUE` à la valeur 1. Ainsi, on peut sommer deux booléens pour obtenir une valeur numérique (cette valeur indique dans combien de fois l'expression est vraie).*
+*Il y a une correspondance numérique à chacune de ces valeurs. `FALSE` correspond à la valeur 0 et `TRUE` à la valeur 1. Ainsi, on peut sommer deux booléens pour obtenir une valeur numérique (cette valeur indique dans combien de fois l'expression est vraie).*
 
 ```{r}
 TRUE + TRUE + FALSE # il y a 2 expression juste 
@@ -122,7 +123,7 @@ Voici des opérations utiles pour obtenir des booléens :
 
 - les opérateurs logiques : `&&` correspond au "et" et `||` correspond au "ou".
 
-> **Exercice** En utilisant des inégalités et des opérateurs logiques, répondez à la question : est ce que le chiffre $\pi$ (enregistrer par défaut sur `R` par la variable `pi`) est compris entre $3,14159265$ et $3,14159266$ ?
+> **Exercice.** En utilisant des inégalités et des opérateurs logiques, répondez à la question : est ce que le chiffre $\pi$ (enregistré par défaut sur `R` par la variable `pi`) est compris entre $3,14159265$ et $3,14159266$ ?
 
 ### Variables à plusieurs dimensions
 
@@ -134,7 +135,7 @@ Il y a également des types de variables contenant plusieurs valeurs différente
 vecteur <- c(premiere_valeur, deuxieme_valeur, ...)
 ```
 
-*Bien sur, on peut avoir accès au $i$-ème élément d'un vecteur en écrivant `vecteur[i]`. Les opérations "classiques" (que ce soit numérique ou booléen) pour les nombres sont utilisables entre deux vecteurs.*
+*On peut avoir accès au $i$-ème élément d'un vecteur en écrivant `vecteur[i]`. Les opérations "classiques" (que ce soit numérique ou booléen) pour les nombres sont utilisables entre deux vecteurs.*
 
 - les listes permettant de donner un nom à chaque élément : 
 
@@ -158,13 +159,13 @@ donnees <- data.frame(nom_vecteur1 = vecteur1,
 **Exercice.** Créez deux vecteurs, appelé `vect1` et `vect2`, de taille 5 avec des valeurs arbitraires.
 1. Calculez la somme, la soustraction et le produit des deux vecteurs. Que se passe-t-il ? \newline
 2. Calculez également les même opérations entre `vect1` et $n$, la variable déclarer plus haut. Encore une fois, que se passe-t-il ? \newline
-3. En utilisant la fonction `sum()` (tester la fonction avant pour voir ce qu'elle fait), comptez le nombre d'élements de la liste `vect2` qui sont plus grands que 3. De même, comptez le nombre d'élements de la liste `vect2` qui sont plus grands que `vect1` (terme à terme).
+3. En utilisant la fonction `sum()` (testez la fonction avant pour voir ce qu'elle fait), comptez le nombre d'élements de la liste `vect2` qui sont plus grands que 3. De même, comptez le nombre d'élements de la liste `vect2` qui sont plus grands que `vect1` (terme à terme).
 
 
 Il y a aussi pleins de petites fonctions utiles qui peuvent servir pour manipuler des vecteurs. 
 
 >
-**Exercice.** Appliquez les fonctions `max`, `min`, `which.max`, `which.min`,`sort` sur `vect1` et commenter leur sortie.
+**Exercice.** Appliquez les fonctions `max`, `min`, `which.max`, `which.min`,`sort` sur `vect1` et commentez leur sortie.
 
 ## Utilisation des boucles
 
@@ -204,7 +205,7 @@ while(relation){
 De plus, sachez qu'il est facile de rajouter un élément à un vecteur : 
 
 ```{r concat}
-a <- c(1,4,9,4)
+a <- c(1, 4, 9, 4)
 
 print(c(a, 7))    # j'ajoute le nombre 7 à la fin du vecteur a
 ```
@@ -215,7 +216,7 @@ print(c(a, 7))    # j'ajoute le nombre 7 à la fin du vecteur a
 
 Pour installer un package, il y a deux moyens : 
 
-- cliquez sur l'onglet "Packages" dans l'interface, puis sur "Install" puis recherchez le nom du package que vous voulez installer puis ré-appuyez sur "Install".
+- cliquez sur l'onglet "Packages" dans l'interface, puis sur "Install" puis recherchez le nom du package que vous voulez installer et ré-appuyez sur "Install".
 
 - tapez dans la console la commande : 
 
@@ -249,9 +250,9 @@ ggplot() +
 
 Pour finir, nous allons créer un projet `R` pour ce cours afin de l'organiser, mais aussi afin de faciliter la navigation via `R`-Studio des fichiers en lien avec ce-dernier. 
 
-Pour ce faire, cliquez qur le petit cube avec un "R" à l'ntérieur (situé à coté du bouton pour créer les scripts). Cliquez sur "New Directory" puis sur "New project". Ensuite donner un nom à votre projet `R` (par exemple DO3-DataViz) et sélectionner le dossier dans lequel vous voulez le placer (en général je crée un nouveau dossier avec le nom du projet).
+Pour ce faire, cliquez qur le petit cube avec un "R" à l'ntérieur (situé à coté du bouton pour créer les scripts). Cliquez sur "New Directory" puis sur "New project". Ensuite, donnez un nom à votre projet `R` (par exemple DO3-DataViz) et sélectionnez le dossier dans lequel vous voulez le placer (en général, je crée un nouveau dossier avec le nom du projet).
 
-> **Exercice.** Créez un projet `R`-Studio. Dans ce dossier créez également les sous-dossiers suivants :
+> **Exercice.** Créez un projet `R`-Studio. Dans ce dossier, créez également les sous-dossiers suivants :
 
 - `src` : pour ranger vos scripts et rapports.
 
@@ -266,9 +267,9 @@ Pour ce faire, cliquez qur le petit cube avec un "R" à l'ntérieur (situé à c
 
 *Il est très utile de savoir structurer ses dossiers de cours (ou de travail en règle général). Essayez de faire ça pas seulement pour ce cours.*
 
-Avoir ouvert `R`-Studio via un projet va également vous permettre d'utilser d'autres librairies utiles comme par exemple `here`.
+Avoir ouvert `R`-Studio via un projet va également vous permettre d'utiliser d'autres librairies utiles comme par exemple `here`.
 
-> **Exercice.** Installez la librairie `here`. Après l'avoir importer, qu'affiche la sortie de `here()` ? Et celle de `here("src")` ? Et `here("src", "TP1.R")` ?
+> **Exercice.** Installez la librairie `here`. Après l'avoir importée, qu'affiche la sortie de `here()` ? Et celle de `here("src")` ? Et `here("src", "TP1.R")` ?
 
 
 Nous allons maintenant terminer ce TP par un petit exercice pratique pour compléter vos premiers pas sur `R` et pour utiliser ce que vous avez appris.
@@ -280,14 +281,14 @@ Dans `R`, il est possible de créer des données facilement en utilisant des loi
 ```{r lancers}
 lancers <- sample(c("Pile", "Face"),    # les issues possibles
                   size = 10,            # le nombre de lancers  
-                  replace = TRUE,       # permet d'avoir plusieurs face ou pile
-                  prob = c(0.5, 0.5))   # proba de tombé sur pile ou face 
+                  replace = TRUE,       # avec remise
+                  prob = c(0.5, 0.5))   # proba de tomber sur pile ou face 
 print(lancers)
 ```
 
-> **Question 1.** Copiez et compilez ce code plusieurs fois, que remarquez-vous ? Comme il s'agit d'une simulation, il est parfois utile d'utiliser une graine (*seed* en anglais) pour la reporductibilité des résultats. Au dessus de votre copier-coller, écrivez `set.seed(2025)` et réexécuter à nouveau plusieurs fois le code. Y-a-t'il un changement ? Et si vous remplacez $2025$ par une autre valeur ?
+> **Question 1.** Copiez et compilez ce code plusieurs fois, que remarquez-vous ? Comme il s'agit d'une simulation, il est parfois utile d'utiliser une graine (*seed* en anglais) pour la reproductibilité des résultats. Au dessus de votre copier-coller, écrivez `set.seed(2025)` et réexécuter à nouveau plusieurs fois le code. Y-a-t'il un changement ? Et si vous remplacez $2025$ par une autre valeur ?
 
-Bien sûr, il s'agit juste d'un exemple jouet. Il est parfois plus compliqué de simuler des données surtout lorsqu'elles sont continues. Heureusement pour nous, `R` est fait pour les statisticien.nes, et il existe des fonctions pour simuler sous des distributions plus complexes (par exemple `runif()` va simuler des réalisations de loi uniforme sur l'intervalle $[0,1]$).
+Bien sûr, il s'agit juste d'un exemple jouet. Il est parfois plus compliqué de simuler des données surtout lorsqu'elles sont continues. Heureusement pour nous, `R` est fait pour les statisticien.ne.s, et il existe des fonctions pour simuler sous des distributions plus complexes (par exemple `runif()` va simuler des réalisations de loi uniforme sur l'intervalle $[0,1]$).
 
 > **Question 2.** Simuler un échantillon de $1000$ observations d'une loi normale centrée réduite (de moyenne 0 et d'écart-type 1) à l'aide de la fonction `rnorm()`.
 

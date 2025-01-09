@@ -1,0 +1,18 @@
+---
+title: "TP2 - Prise en main des tableaux de données sous `R`"
+author: "CAPEL Alexandre"
+date: "2025-01-15"
+output: 
+  pdf_document:
+    number_sections: true
+abstract: >
+  Premier TP noté
+header-includes:
+  \renewcommand{\abstractname}{ }
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
