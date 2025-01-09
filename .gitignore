@@ -23,7 +23,7 @@
 *.zip
 *.gz
 *.ai
-*.html
+# *.html
 .Rproj.user
 # Latex
 *.syntex.gz
