@@ -57,7 +57,7 @@ knitr::opts_chunk$set(echo = FALSE)
 <br> \newline
 <br> \newline
 
-<center> **1** "petit" TP **ET** un gros TP/projet </center>
+<center> **1** "petit" TP **ET** un gros TP/projet (à définir) </center>
 
 <br> \newline
 
@@ -117,7 +117,7 @@ et sa [librairie](https://CRAN.R-project.org/package=fivethirtyeight) associée
 
 <center><img src = "figures/iceberg-statistics.jpg" width = 80% style = "text-align: right; vertical-align: middle"></img></center>
 
-image emprunté d'un cours de F.Muñoz.
+image empruntée d'un cours de F. Muñoz.
 
 
 ## But du jeu {.build}
@@ -326,9 +326,9 @@ C'est une interface :
 
 - avec son propre langage de programmation (fichier `.R`).
 
-- optimiser pour la statistique (la plupart des notions sont codées dans des librairies).
+- optimisée pour la statistique (la plupart des notions sont codées dans des librairies).
 
-- permet de produire des figures de bonnes qualités.
+- permet de produire des figures de qualité.
 
 - permet de produire des rapports pour la transmission des résultats (`.Rmd`...)
 
@@ -349,13 +349,13 @@ C'est une interface :
 
 ## Structure
 
-L'interface est structuré ainsi : 
+L'interface est structurée ainsi : 
 
 <center><img src="figures/structure.png" height="350px" /></center>
 
 ## Opérations
 
-- Les opérations classiques : `+`, `-`, `*` et `/`. 
+- Les opérations classiques : `+`, `-`, `*` et `/` (`**` ou `^` pour la puissance). 
 
 - Opérateur sur les booléens :
 ```{r boolean, echo = TRUE}
@@ -368,7 +368,7 @@ TRUE && FALSE
 
 ## Déclaration de variable 
 
-Il y a deux manière de déclarer une variable : 
+Il y a deux manières de déclarer une variable : 
 
 ```{r var, echo=TRUE}
 a <- 2
@@ -431,7 +431,7 @@ Il y a aussi des fonctions "classiques" utiles en statistiques :
 
 <br> \newline
 
-et plein d'autres...
+et pleins d'autres...
 
 
 <!-- ************************************************************************ -->
