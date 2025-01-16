@@ -6,13 +6,186 @@ output:
   pdf_document:
     number_sections: true
 abstract: >
-  Premier TP noté
+  Premier TP noté à faire **individuellement**. Vous êtes notés sur les réponses aux question, le code, mais également la qualité de votre rapport. Ne négligez donc pas la mise en page. Vous pouvez rendre votre rapport sous le format de votre choix (`.html` ou `.pdf`) en me l'envoyant par e-mail : \newline \color{blue}{alexandre.capel@umontpellier.fr} \color{black} (**pas** l'adresse @etu.umontpellier.fr svp j'y vais jamais.) \newline
+  Date maximale de rendu : vendredi 24 janvier (sinon -1pt/jour). 
+
+  
 header-includes:
   \renewcommand{\abstractname}{ }
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(dplyr,
+               tibble)
 ```
+
+**Barème :** 
+
+  - Exercice 1 - 4 pts
+  - Exercice 2 - 4 pts.
+  - Exercice 3 - 8 pts.
+  - Qualité du rapport - 4pts.
+  
+# Une liste de commande utile
+
+Les librairies du `tidyverse` sont très complètes et permettent de faire à peu près tout ce que l'on voudrait. Voici une petite liste de commandes utiles pour ce TP, mais aussi pour des manipulations usuelles. 
+
+*Si vous voulez en savoir plus sur chaque fonction, je vous invite à aller voir dans la doc en tapant `?nom_fonction`.*
+
+- `select()` pour sélectionner des variables.
+
+```{r select, eval = FALSE}
+data |> select(var1, var2, ...)
+```
+
+- `slice()` pour sélectionner les lignes que vous voulez. 
+
+```{r slice, eval = FALSE}
+data |> slice(vecteur_index)
+```
+
+- `filter()` pour sélectionner les individus vérifiant une ou des conditions : 
+
+```{r filter, eval = FALSE}
+data |> filter(cond1, cond2, ...)
+```
+
+- `mutate()` pour créer une nouvelle variable à partir des autres.
+
+```{r mutate, eval = FALSE}
+data |> mutate(var_new1 = var_old1 + var_old2, var_new2 = var_old3 / var_old2, ...)
+```
+
+- `arrange()` pour trier certaines variables dans l'ordre croissant.
+
+```{r arrange, eval = FALSE}
+data |> arrange(var1)
+```
+
+- `summarise()` pour créer un nouveau tableau de données qui synthétise (à l'aide d'une fonction) le tableau précédent. 
+
+```{r summarise, eval = FALSE}
+data |> summarise(var_synt1 = fonction1(var1),
+                  var_synt2 = fonction2(var2))
+```
+
+Parfois, il est nécessaire de grouper les variables selon certaines modalités pour pouvoir avoir des informations intéressantes : pour cela, on utilise la fonction `group_by()`. 
+
+Par exemple si j'ai le tableau de données suivant : 
+
+```{r ex-donnee, echo = FALSE}
+data <- tibble(x = rexp(20), groupe = factor(sample(1:2, 20, replace =T)))
+head(data)
+```
+
+Pour calculer la moyenne selon le groupe avec la fonction `summarise()`, il faut écrire :
+
+```{r mean-group}
+data |> 
+  group_by(groupe) |>
+  summarise(moyenne_par_groupe = mean(x))
+```
+
+cela fonctionne aussi avec d'autres fonctions comme `mutate()`. 
+
+*Si vous voulez enchainer plusieurs commandes d'un coup et "dégrouper", il suffit d'utiliser la fonction `ungroup()`.*
+
+- `pivot_longer()` permet de fusionner des colonnes en une unique variable et crée une nouvelle variable indiquant de quelle variable la valeur provient.
+
+```{r pivot-longer, eval=FALSE}
+data |> 
+  pivot_longer(cols = c(variables, à, fusionner),
+               values_to = nom_variable,
+               names_to = nom_variable_indicative)
+```
+
+
+*Bien entendu, vous pouvez enchainez les pipes (`|>`) en une seule fois pour ne sauvegarder que le tableau de données qui vous intéresse.*
+
+# Premières manipulations avec `tidyverse`
+
+Nous allons créer un jeu de données comportant plusieurs colonnes et apprendre à manipuler ce dernier à l'aide de diverses commandes. 
+
+> **1.** Créer un `data.frame` (ou un `tibble`) de 200 individus, avec : 
+
+- une variable `x` correspondant à la réalisation d'un échantillon aléatoire suivant une normale centrée de variance 4.
+
+- trois variables différentes `y_1`, `y_2` et `y_3` où : 
+$$
+y_1 = 1+3x + \varepsilon_1, \quad y_2 = 3+x^2 + \varepsilon_2, \quad y_1 = \exp(x) + \varepsilon_3
+$$
+
+> où $\varepsilon_i$ est la réalisation d'un échantillon suivant une loi gaussienne centrée réduite.
+
+>  **2.** Sélectionnez 10 lignes aléatoires (utiliser `sample`) et affichez les selon l'ordre croissant par rapport à la variable `x`. 
+
+> **3.** Fusionnez les variables `y` et créez une variable `groupe`, indiquant de quelle type de modèle il s'agit (linéaire, quadratique, exponentiel).
+
+> **4.** Tracez les nuages de points correspondant dans le même graphique avec une couleur par groupe. 
+Séparez ensuite les nuages de points avec `facet_wrap()` puis ajoutez une régression avec la fonction `geom_smooth(se = FALSE)`.
+
+> **5.** Créez une nouvelle colonne nommée `noise` donnant les valeurs de `y` centrées, c'est à dire en retranchant les moyennes par groupe. Sélectionnez ensuite toutes les variables sauf `y` et affichez le nuage des points centrés pour chaque groupe. 
+
+# Les prénoms aux États-Unis
+
+Dans la librarie `babynames` vous pouvez trouver un jeu de données possédant le même nom et qui rescense, depuis 1880, tous les prénoms (masculins ou féminins) donnés à plus de 5 enfants aux États-Unis.
+
+> **1.** Décrivez brièvement le jeu de données.
+
+> **2.** Déterminer la liste des 10 prénoms les plus utilisés pour les garçons et les filles
+en l’an 2000.
+
+> **3.** Déterminer la proportion représentée par les 10 prénoms les plus utilisés par
+année et sexe.
+
+> **4.** Représenter l'évolution de la proportion des deux premiers prénoms masculins et féminins de l'année 2000, à partir de la-dite année.
+
+# Tournois de tennis en 2013
+
+On souhaite manipuler un petit peu un jeu de données contenant les informations sur le tournoi masculin de Roland Garros qui a eu lieu en 2013. Pour cela, il vous faut importer un fichier `.csv` dans `R` en utilisant la commande suivante : 
+
+```{r importer-donnee, echo=TRUE, eval=FALSE}
+donnee <- read.csv(file = "chemin/vers/fichier.csv")
+```
+
+Téléchargez le fichier `FrenchOpen-men-2013.csv` disponible sur le Moodle et importez le jeu de données dans votre environement.
+
+Voici les variables qui peuvent nous intérésser : 
+
+- `Player1` et `Player2` donnent les prénoms des joueurs du match.
+
+- `Round` donne à quel moment du championnant le match a lieu.
+
+- `Result` indique 0 si `Player1` l'emporte et 1 sinon.
+
+- `TPW.1` et `TPW.2` donnent les points marqués par respectivement `Player1` et `Player2`.
+
+- `ACE.1` et `ACE.2` donnent le nombre de *aces* effectués par respectivement `Player1` et `Player2`.
+
+- `DBF.1` et `DBF.2` donnent le nombre de doubles fautes commises par respectivement `Player1` et `Player2`.
+
+
+> **1.** Construire la liste des joueurs `Player1`. Idem pour `Player2`.
+
+> **2.** Affichez tous les matchs de Roger Federer.
+
+> **3.** Affichez le nom des demi-finalistes.
+
+> **4.** Combien y-a-t'il de point disputé par match ?
+
+> **5.** Regardons maintenant les *aces*. Pour chaque tour, affichez le plus petit nombre, le plus grand et le nombre moyen de ace effectué par l'ensemble des deux joueurs.
+
+> **6.** Combien y-a-t'il eu de doubles fautes dans le tournoi.
+
+> **7.** Faites un histogramme (`geom_hist()`) du nombre de double faute par match.
+
+> **8.** Représentez l’évolution du nombre moyen de doubles fautes par match au
+cours des diﬀérents tours.
+
+
+
+
+
 
 

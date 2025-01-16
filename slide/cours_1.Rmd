@@ -380,7 +380,7 @@ print(c(a, b))
 
 <br> \newline
 
-(on peut même faire dans ce sens `->`).
+
 
 ## Création de vecteur simples
 

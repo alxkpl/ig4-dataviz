@@ -244,8 +244,8 @@ La fonction `ggplot` prend en entrée les données, puis l'"esthétique", donné
 Les fonctions `geom_---` indiquent ce qu'il faut tracer.
 Vous pouvez par exemple tester ici `geom_line` ou `geom_point`.
 
-> **Exercice.** Créez un data frame à deux variables où : la première colonne appelée `x` contient les valeurs entre $-1$ et $1$ avec un pas de $0,01$ (utilisez la fonction `seq()`) et la deuwième colonne appelée `x_square` contient les éléments de `x` au carré.
-À partir de ce jeu de données, tracer la courbe correspondante en utilisant le squelette ci-dessus.
+> **Exercice.** Créez un data frame à deux variables où : la première colonne appelée `x` contient les valeurs entre $-1$ et $1$ avec un pas de $0,01$ (utilisez la fonction `seq()`) et la deuxième colonne appelée `x_square` contient les éléments de `x` au carré.
+À partir de ce jeu de données, tracez la courbe correspondante en utilisant le squelette ci-dessus.
 
 ## Couches supplémentaires
 
@@ -273,6 +273,8 @@ mon_graphe +
 *On peut également utiliser la couche `labs(x = "---", y = "---", title = "---")` qui regroupe pleins de couches en une seule.*
 
 Il existe pleins d'autres éléments de personnalisation que je présenterai dans un cours ultérieur (ou vous pouvez les chercher dans la [\color{blue}{fiche résumée}](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)).
+
+> **Exercice.** Renommez les axes et donnez un titre au graphe précédent.
 
 > **Exercice.** Reprenez le script du TP0 et faites en un rapport `.Rmd` avec les codes et les réponses aux questions (sortie `.html` ou `.pdf`). 
 

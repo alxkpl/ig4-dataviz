@@ -109,10 +109,9 @@ Le code de tout à l'heure ne marche plus...
 
 Un langage vachement pratique pour faire de la base de données et pour formater ces derniers est le `SQL`. 
 
-$\hookrightarrow$ inutilisable de manière brute sur `R`...
+<br> \newline
 
-
-Mais il existe des packages utiles qui reproduisent les commandes `SQL`directement en temps réel.
+Il existe des packages utiles qui reproduisent les commandes `SQL`directement en temps réel.
 
 ## Le monde de `tidyverse` {.build} 
 
@@ -130,9 +129,13 @@ $\hookrightarrow$ regroupe plusieurs libraries utiles pour les sciences des donn
 
 - `select()` : va sélectionner un sous-ensemble de variable (donc les colonnes) que vous avez choisi.
 
+- `slice()` : sélectionne des lignes. 
+
 - `filter()` : va sélectionner les individus qui vérifie une condition.
 
 - `mutate()` : crée une nouvelle colonne, calculable à partir des variables du jeu de données.
+
+
 
 ## Exemple
 
