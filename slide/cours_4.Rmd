@@ -1,0 +1,546 @@
+---
+title: "IG4 - Visualisation"
+subtitle: "Variables Qualitatives"
+author: "Paul Bastide, Chloé Serre-Combe"
+output:
+  ioslides_presentation:
+    fig_width: 7
+    fig_height: 4
+  self_contained: true
+---
+
+```{r setup, echo = FALSE}
+library(ggplot2)
+set.seed(1289)
+```
+
+<!-- ************************************************************************ -->
+# Rappels
+<!-- ************************************************************************ -->
+
+## Variables qualitatives {.build}
+
+<center> **Variable Qualitative**
+
+$\downarrow$
+
+Réalisation d'une v.a. $X$ à valeur dans un espace $E$ fini.
+
+</center> 
+
+- le sexe dans une population : $E = \{femme, homme\}$.
+
+- groupe sanguin : $E = \{A,B, AB, O\}$. 
+
+- nombre d'enfant : $E = \{Aucun, 1, 2, 3, +4\}$.
+
+- note d'appréciation de vin : $E= \{0, 1, \dots, 10\}$.
+
+## Type de variables qualitatives
+
+Elles peuvent être : 
+
+  - **ordinales**: échelle entre les modalités .
+
+<center> *Exemple:* Nombre d'enfant, note d'appréciation de vin ...  </center>
+
+<br> \newline
+
+  - **nominales**: pas de relation d'ordre entre les modalités.
+
+<center> *Exemple:* sexe, groupe sanguin ...</center>
+
+## Quantités intéressantes {.build}
+
+**Une seule quantité** vraiment intéressante : 
+
+$\hookrightarrow$ les *fréquences*. 
+
+La nature "qualitative" de ces variables empêchent le calcul d'autres quantité comme la moyenne par exemple.
+
+
+## Format des données 
+
+Les données peuvent sous deux formats : 
+
+- un tableau avec données de comptages : 
+
+```{r, echo = FALSE}
+#| tab.cap: Tableau de comptage pour les groupes sanguins
+data.frame(A = 35, AB = 2, B = 7, O = 33, row.names = "Nombre") |> knitr::kable()
+```
+
+## Format des données 
+
+Les données peuvent sous deux formats : 
+
+- un tableau disjonctif complet où chaque individu est la ligne du tableau : 
+
+```{r, echo = FALSE}
+#| tab.cap: Tableau de disjonctif complet pour les groupes sanguins
+data.frame(ind = 1:4, A = c(1,1,0,0), AB = c(0,0,1,0), B = c(0,0,0,0), O = c(0,0,0,1)) |> knitr::kable()
+```
+
+## Format des données
+
+La deuxième permet de faire plus de chose que la première tout en contenant la même information. 
+
+<!-- ************************************************************************ -->
+# Visualiser des quantités
+<!-- ************************************************************************ -->
+
+## Variables qualitatives dans `R` {.build}
+
+**Variable Qualitative**: les **modalités** sont des **noms**.
+
+`R` représente les variables qualitatives sous la forme de `factor`: 
+
+```{r ex-factor}
+x <- sample(letters[1:4], 15, replace = TRUE)
+x
+
+x_factor <- factor(x)
+x_factor
+```
+
+$\to$ `levels` $=$ **modalités**.
+
+## Succès au box-office {.build}
+
+**Question**: *De quel(s) pays viennent les films que les français regardent ?*
+
+**Individu**: 
+
+*un film*
+
+**Population**: 
+
+*tous les films sortis en salle depuis 1930*
+
+**Échantillon**: 
+
+*les 100 films ayant fait le plus grand nombre d'entrées*
+
+**Variable**: 
+
+*pays de production majoritaire* : Qualitative, nominale
+
+
+## Succès au box-office
+
+Pays de production des cent films ayant fait le plus d'entrées
+au cinéma en France depuis 1930.
+
+```{r film-data}
+boxoffice <- data.frame(
+  country = c("USA", "FRA", "UK", "IT"), # pays de production
+  number = c(51, 45, 03, 01)             # nombre de films
+)
+
+boxoffice
+```
+
+Source: [wikipedia](https://fr.wikipedia.org/wiki/Liste_des_plus_gros_succ%C3%A8s_du_box-office_en_France#Les_100_premiers_films_au_box-office_fran%C3%A7ais)
+
+## Diagramme en bar {.build}
+
+```{r film-plot, fig.height=3, fig.width=6, fig.align='center'}
+ggplot(boxoffice,           ## Données
+       aes(x = country,     ## Pays en x
+           y = number)) +   ## nombre en y
+  geom_col()                ## "col" = "column"
+```
+
+Peut-on améliorer cette représentation ?
+
+## Ordonner des facteurs {.build}
+
+La colonne `country` de `boxoffice` est un vecteur de caractères:
+```{r film-char}
+boxoffice$country
+```
+
+En interne, `R` la transforme en `factor`:
+```{r film-factor}
+factor(boxoffice$country)
+```
+
+$\to$ classé par ordre alphabétique
+
+## Ordonner des facteurs {.build}
+
+La fonction `fct_reorder` de la librairie `forcats`
+permet de réordonner les facteurs:
+
+```{r film-factor-ord}
+library(forcats)
+
+## Ordonnés par nombre de films croissants
+fct_reorder(boxoffice$country, boxoffice$number)
+
+## Ordonnés par nombre de films décroissants
+fct_reorder(boxoffice$country, -boxoffice$number)
+```
+
+## Diagramme en barres ordonné
+
+```{r film-plot-2, fig.height=3, fig.width=6, fig.align='center'}
+ggplot(boxoffice,
+       aes(x = fct_reorder(country, number), # pays ordre croissant 
+           y = number)) +   
+  geom_col()              
+```
+
+## Diagramme en barres ordonné
+
+```{r film-plot-3, fig.height=3, fig.width=6, fig.align='center'}
+ggplot(boxoffice,
+       aes(x = fct_reorder(country, -number), # pays ordre décroissant 
+           y = number)) +   
+  geom_col() + 
+  xlab("Country")                             # noms de l'axe des x
+```
+
+<!-- ************************************************************************ -->
+# Visualiser des proportions
+<!-- ************************************************************************ -->
+
+## Effectif et fréquence {.build}
+
+**effectif** $n_i$: nombre d'individus présentant une modalité.
+
+**fréquence** $f_i$: effectif d'une modalité sur l'effectif total:
+$$
+f_i = \frac{n_i}{n}
+$$
+
+```{r penguin-agg, message = FALSE, echo = FALSE}
+library(dplyr)
+library(palmerpenguins)
+penguins_nona <- na.omit(penguins)
+eff <- penguins %>% group_by(species) %>% 
+  summarise(effectif = n(),
+            frequence = n() / length(penguins$species))
+colnames(eff) <- c("Espèce ($x_i$)",
+                   "Effectif ($n_i$)",
+                   "Fréquence ($f_i$)")
+knitr::kable(eff)
+```
+
+## Fréquences ou effectifs ?
+
+```{r, fig.height=3, fig.width=8, fig.align='center', echo = FALSE, warning = FALSE}
+library(ggforce)
+
+side <- ggplot(penguins_nona,
+               aes(x = fct_relevel(species, "Adelie", "Gentoo", "Chinstrap"),
+                   fill = fct_relevel(species, "Adelie", "Gentoo", "Chinstrap"))) +
+  ggtitle("Diagramme en barres") + 
+  geom_bar() + xlab(NULL) + ylab("effectif") + scale_fill_discrete(guide = "none") + theme_minimal()
+
+stack <- ggplot(penguins_nona,
+                aes(x = 1,
+                    fill = fct_relevel(species, "Adelie", "Gentoo", "Chinstrap"))) +
+  geom_bar(position = "stack") +
+  xlab(NULL) + ylab("effectif") + theme_minimal() + ggtitle("Barres empilées") + 
+  scale_fill_discrete(name = "Species") + 
+  theme(
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+  )
+
+pen_sum <- penguins %>% 
+  group_by(species) %>% 
+  summarise(effectif = n(),
+            frequence = n() / length(penguins$species))
+
+pie <- ggplot(pen_sum,
+               aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
+                   amount = effectif,
+                   fill = fct_relevel(species, "Adelie", "Gentoo", "Chinstrap"))) +
+  xlab(NULL) + ylab(NULL) + coord_fixed() + ggtitle("Diagramme en secteurs") + 
+  geom_arc_bar(stat = "pie") + scale_fill_discrete(guide = "none") + theme_void()
+
+cowplot::plot_grid(
+  side, stack, pie,
+  nrow = 1#, rel_widths = c(1.05, .65, .9)
+)
+```
+
+Quelle représentation est la plus adaptée ?
+
+# Le très contesté graphique en secteur
+
+## Le bon vieu fromage
+
+<br> \newline
+<br> \newline
+<center> **Formellement :** le graphique en pointe de tarte  </center>
+<br> \newline
+<center> $\downarrow$ </center>
+<br> \newline
+<center>représente des classes par des angles proportionnels à la fréquence. </center> 
+
+## Parts de marché {.smaller .build}
+
+Exemple jouet de [wikipedia](https://en.wikipedia.org/wiki/File:Piecharts.svg):
+
+```{r}
+marketshare <- data.frame(
+  percent = c(17, 18, 20, 22, 23, 20, 20, 19, 21, 20, 23, 22, 20, 18, 17),
+  company = rep(LETTERS[1:5], 3),
+  year = rep(c("2015", "2016", "2017"), each = 5)
+)
+
+marketshare |> slice(1:4) |> knitr::kable()
+```
+
+
+Parts de marché de cinq entreprises pour trois années différentes.
+
+Comment visualiser l'évolution des parts de marché  avec un camembert ?
+
+
+## Parts de marché - Camembert {.build}
+
+Quelle entreprise a pris des parts de marché ?
+
+```{r, fig.height=3.5, fig.width=8, fig.align='center', echo = FALSE}
+ggplot(marketshare,
+       aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
+           amount = percent,
+           fill = company)) +
+  facet_grid(. ~ year, switch = "x") + 
+  xlab(NULL) + ylab(NULL) + coord_fixed() + ggtitle("Évolution des parts de marché") +
+  geom_arc_bar(stat = "pie") + theme_void()
+```
+
+Diagramme en secteurs : la proportion est codée par l'angle.
+
+<center> Illisible. </center>
+
+## Alternative - Barre{.build}
+
+Quelle entreprise a pris des parts de marché ?
+
+```{r, echo = FALSE, fig.align="center", fig.height=4, fig.width=7}
+ggplot(marketshare) + 
+  aes(x = year, y = percent, group = company) + 
+  geom_col(aes(fill = company), position = "dodge") +
+  theme_minimal() + 
+  labs(y = "Parts (%)", x = "Années", title = "Évolution des parts de marché",
+       fill = "Entreprise") +
+  hrbrthemes::theme_ipsum()
+```
+
+
+Comparaisons temporelles plus faciles.
+
+## Production de fruits - Camembert {.build}
+
+La proportion de fruit produit dans la parcelle ?
+
+```{r sect-fruit, echo=FALSE}
+fruits <- data.frame(
+  percent = c(28, 15, 11, 15, 24, 6, 2, 1, 1), 
+  Fruits = c("Pomme", "Poire", "Orange", "Kiwi", "Abricot", 
+             "Pasteque", "Pêche", "Prune", "Melon")
+)
+
+ggplot(fruits,
+       aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
+           amount = percent,
+           fill = Fruits)) +
+  xlab(NULL) + ylab(NULL) + coord_fixed() +
+     scale_fill_brewer(palette = "PRGn") + ggtitle("Proportion de fruits produits") +
+  geom_arc_bar(stat = "pie") + theme_void()
+```
+
+Trop de modalités affichées + compliqué de comparer les valeurs
+
+## Production de fruits - Barres {.build}
+
+La proportion de fruit produit dans la parcelle ?
+
+```{r, fig.height=3.5, fig.width=8, fig.align='center', echo = FALSE}
+ggplot(fruits,
+       aes(y = forcats::fct_reorder(Fruits, percent), x = percent, fill = forcats::fct_reorder(Fruits, percent))) +
+  geom_col(show.legend = FALSE) +
+  labs(y = NULL, x = "Proportion", fill = "Fruits", 
+       title = "Proportion de fruits produits") + 
+   scale_fill_brewer(palette = "PRGn") +
+  hrbrthemes::theme_ipsum()
+```
+
+Permet une comparaison plus facile même avec beaucoup de modalités.
+
+## Évolution de production - Camembert {.build}
+
+Quelle est l'évolution de production de pomme ?
+
+```{r fig.height=3.5, fig.width=8, fig.align='center', echo = FALSE}
+pomme <- data.frame(
+  percent = c(17, 12, 27, 34),
+  period = c("Q1", "Q2" , "Q3", "Q4")
+)
+
+ggplot(pomme,
+       aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
+           amount = percent,
+           fill = period)) +
+  xlab(NULL) + ylab(NULL) + coord_fixed() + labs(fill = "Période") +
+     scale_fill_brewer(palette = "PRGn") +
+  ggtitle("Proportion de production annuelle de pomme")+
+  geom_arc_bar(stat = "pie") + theme_void()
+```
+
+## Évolution de production - Alternative {.build}
+
+Quelle est l'évolution de production de pomme ?
+
+$\hookrightarrow$ polygône des fréquences
+
+```{r, echo = FALSE, fig.align='center'}
+ggplot(pomme) + 
+  aes(x = period, y = percent, group = NA) + 
+  geom_point(shape = 0, size = 1.5, col = "darkorange", stroke = 1) + 
+  geom_line(col = "grey60", linewidth = 1) +
+  coord_cartesian(ylim = c(0, 37)) +
+  labs(x = "Période", y = "Proportion (%)", title = "Proportion de production annuelle de pomme") +
+  hrbrthemes::theme_ipsum()
+```
+
+
+
+## Parlement Rwandais {.build}
+
+```{r, echo = FALSE}
+# Proportion of seats held by women in national parliaments (%)
+# Women in parliaments are the percentage of parliamentary seats in a single or lower chamber held by women.
+# Source: Inter-Parliamentary Union ( IPU ) ( ipu.org ).
+# remotes::install_github("clauswilke/dviz.supp")
+
+# if you have trouble with the installation of this package do:
+# > install.packages("colorspace", repos = "http://R-Forge.R-project.org")
+# > install.packages("colorblindr")
+# > remotes::install_github("clauswilke/dviz.supp")
+  
+library(tidyr)
+women_parliaments <- dviz.supp::women_parliaments
+parlement_rwanda <- women_parliaments %>%
+  filter(country_code == "RWA" & year > 1990) %>%
+  mutate(women = perc_women, men = 100 - perc_women) %>%
+  select(-perc_women) %>%
+  pivot_longer(cols = c(women, men), names_to = "gender", values_to = "percent") %>%
+  mutate(gender = factor(gender, levels = c("women", "men")))
+```
+
+```{r, echo = FALSE}
+head(parlement_rwanda)
+```
+
+
+## Parlement Rwandais - Barres
+
+Quelle est l'évolution de la proportion de femmes élues ?
+
+```{r fig.height=3.5, fig.width=8, fig.align='center', echo = FALSE}
+ggplot(parlement_rwanda,
+       aes(x = gender, y = percent, fill = gender)) +
+  facet_grid(. ~ year) + 
+  geom_col() + theme_minimal() + xlab(NULL) + 
+    theme(
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    strip.background = element_blank()
+  )
+```
+
+## Parlement Rwandais - Camembert
+
+Quelle est l'évolution de la proportion de femmes élues ?
+
+```{r, fig.height=3.5, fig.width=8, fig.align='center', echo = FALSE}
+ggplot(parlement_rwanda,
+       aes(x0 = 0, y0 = 0, r0 = 0, r = 1,
+           amount = percent,
+           fill = gender)) +
+  facet_wrap(. ~ year, strip.position = "bottom") + 
+  xlab(NULL) + ylab(NULL) + coord_fixed() +
+  geom_arc_bar(stat = "pie") + theme_void()
+```
+
+## Parlement Rwandais - Barres empilées
+
+Quelle est l'évolution de la proportion de femmes élues ?
+
+```{r, fig.height=3.5, fig.width=8, fig.align='center', echo = FALSE}
+ggplot(parlement_rwanda,
+       aes(x = year, y = percent, fill = gender)) +
+  geom_col(position = "stack") + theme_minimal()
+```
+
+s'additionne à 100% pour chaque année.
+
+## Quand utiliser le camembert ? {.build}
+
+<center> lorsqu'il n'y a que deux voire trois modalités **pas plus**. </center> 
+
+<br> \newline 
+
+$\hookrightarrow$ compléter ensuite avec un petit texte pour mettre en valeur une des deux (ou trois modalités), même si c'est visible dans le graphique. 
+
+<br> \newline 
+
+(mais même dans ce cas là, les diagramme en barres empilées est mieux.).
+
+<!-- ************************************************************************ -->
+# Récapitulatif
+<!-- ************************************************************************ -->
+
+
+## Quelle représentation choisir ?
+
+**Camembert**:
+
+>* $-$ A mauvaise presse
+>* $-$ Comparaisons difficiles
+>* $-$ Problème quand beaucoup de modalités
+
+>* $+$ Représente une proportion
+>* $+$ Fractions simples faciles a lire ($1/2$, $1/3$, $1/4$)
+
+## Quelle représentation choisir ?
+
+**Barres empilées**:
+
+>* $-$ Comparaisons parfois difficiles
+>* $-$ Problème quand beaucoup de modalités
+
+>* $+$ Représente une proportion
+>* $+$ Evolution temporelle
+
+## Quelle représentation choisir ?
+
+**Barres**:
+
+>* $-$ Ne représente pas une proportion
+
+>* $+$ Reste lisible même avec beaucoup de classes
+>* $+$ Evolution temporelle
+
+
+## Références
+
+- *Fundamentals of Data Visualization* :  
+[Chapter 6: Visualizing amounts](https://clauswilke.com/dataviz/visualizing-amounts.html)  
+[Chapter 10: Visualizing proportions](https://clauswilke.com/dataviz/visualizing-proportions.html)  
+[Chapter 11: Visualizing nested proportions](https://clauswilke.com/dataviz/nested-proportions.html)
+- *Data Visualization—A Practical Introduction* :  
+[Chapter 4.4: Geoms can transform data](https://socviz.co/groupfacettx.html#statfunctions)
+- **ggplot2** reference documentation:  
+[`geom_bar()`, `geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html)  
+[`position_stack()`, `position_fill()`](https://ggplot2.tidyverse.org/reference/position_stack.html)  
+[`position_dodge()`](https://ggplot2.tidyverse.org/reference/position_dodge.html)  
+[`geom_arc_bar()`](https://ggforce.data-imaginist.com/reference/geom_arc_bar.html)
