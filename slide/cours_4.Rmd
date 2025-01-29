@@ -1,7 +1,7 @@
 ---
 title: "IG4 - Visualisation"
 subtitle: "Variables Qualitatives"
-author: "Paul Bastide, Chloé Serre-Combe"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre Capel"
 output:
   ioslides_presentation:
     fig_width: 7
@@ -83,7 +83,9 @@ data.frame(ind = 1:4, A = c(1,1,0,0), AB = c(0,0,1,0), B = c(0,0,0,0), O = c(0,0
 
 ## Format des données
 
-La deuxième permet de faire plus de chose que la première tout en contenant la même information. 
+La deuxième permet de faire plus de chose que la première tout en contenant la même information.
+
+
 
 <!-- ************************************************************************ -->
 # Visualiser des quantités
