@@ -1,0 +1,363 @@
+---
+title: "TP 2 - Variables qualitatives"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre CAPEL"
+date: "2024-2025"
+output:
+  html_document:
+   number_sections: true
+---
+
+# Introduction {-}
+
+Une variable **qualitative** est une variable dont les modalités (c'est à dire ses valeurs possible) sont des noms. Elles peuvent être de deux natures différentes :
+
+- **ordinales** : avec une hiérarchisation des modalités (*e.g.* Notes d'appréciation d'un jury : Mauvais, Moyen, Bon).
+
+- **nominale** : sans une hiérarchisation des modalités (*e.g.* Catégorie socio-professionnelle : Sans-emploi, Salarié, Cadre, Fonctionnaire...)
+
+Dans `R`, il existe un type de variable permettant de représenter les variables qualitatives : il s'agit de la classe `factor`.
+
+## Mise en place {-}
+
+Ouvrez le projet du cours dans `RStudio`.
+
+Créez un nouveau document `.Rmd`, avec une sortie au format `html` (ou `pdf`).
+
+Vous compléterez ce document au fur et à mesure en suivant les indications du texte.
+
+---
+
+# Box Office
+
+## Diagramme en barres avec `geom_col()`
+
+On reprend le jeu de données donnant le pays de production des cent films ayant
+fait le plus d'entrées au cinéma en France 
+[source : wikipedia](https://fr.wikipedia.org/wiki/Liste_des_plus_gros_succ%C3%A8s_du_box-office_en_France#Les_100_premiers_films_au_box-office_fran%C3%A7ais).
+
+
+> **1.** Créez un data.frame nommé `boxoffice` contentant deux variables : la variable `country` représentant le pays, et la variable `number` représentant le nombre de films. (Prendre seulement les 4 premiers pays.)
+
+```{r}
+boxoffice <- data.frame(country = c("USA", "France", "Italie", "UK"), 
+                        number = c(58, 43, 15, 11))
+boxoffice
+```
+
+> **2.** En utilisant `ggplot2` (n'oubliez pas de l'importer !) et la fonction `geom_col()`,
+faire un diagramme en barres représentant le nombre de films par pays 
+de production. Que se passe-t-il lorsque vous échangez le rôle de `x` et `y `?
+
+```{r}
+library(ggplot2)
+library(forcats)
+
+ggplot(boxoffice) + 
+  aes(x = fct_reorder(country, -number), y = number) + geom_col(fill = "darkred") +
+  labs(x="Pays", y = "Nombre de film", title = "TOP 100 France") + 
+  theme_light() + 
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 15))  
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+library(ggplot2)
+library(forcats)
+
+ggplot(boxoffice) +
+  aes(x = fct_reorder(country, -number), y = number) + 
+  geom_col(fill = "darkred") + 
+  labs(x = "Pays", y = "Nombre de films", title = "Top 100 France")
+
+```
+
+
+
+## Ordonnancement des facteurs
+
+On cherche maintenant à rendre la représentation plus facile à lire.
+
+Par défaut, `R` classe les facteurs (pays) par ordre alphabétique.
+C'est rarement le bon choix, et il faut souvent ré-ordonner les facteurs
+pour obtenir une représentation plus agréable.
+
+Ici, on cherche à ordonner les pays par nombre de films, de telle sorte à
+représenter une "hiérarchie" entre eux.
+
+Pour cela, on utilise la fonction `fct_reorder`, de la librairie `forcats`.
+
+> **1.** Reprendre la représentation précédente, en classant les pays du plus gros au plus petit producteur en utilisant la fonction `fct_reorder`.
+
+
+
+
+
+## Nettoyage
+
+Il est possible de changer le thème du graphique
+(e.g., fond blanc au lieu de gris), d'ajouter des noms aux axes et un titre.
+Il est aussi possible de changer la couleur des barres.
+
+> **1.** Reprenez et améliorez le graphique précédent, de telle sorte à le
+rendre "publiable". Décrivez en une phrase le jeu de données, afin que votre 
+document soit auto-sufisant.
+
+---
+
+# Pingouins
+
+## Jeu de données et objectif
+
+On reprend le jeu de données des pingouins de l'antarctique,
+contenu dans la librairie [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/).
+
+On cherche à faire une représentation similaire à la précédente, c'est-à-dire 
+un diagramme en barres, avec le nombre d'individus de chaque espèce présente dans l'archipel.
+
+> **1.** Importez le package `palmerpenguins` et chargez les données du jeu de données `penguins`. Regardez les premières lignes du jeu de données à l'aide de la fonction `head`, que remarquez vous ? Pour contourner le problème, utilisez la fonction `na.omit`.
+
+
+> **2.** Décrivez l'expérience statistique associée à ce graphique:
+>
+> * à quelle question tente-t-on de répondre ? 
+>
+> * quels sont les *individus* ?
+>
+> * quelle est la *population* ? l'*échantillon* ?
+>
+> * quelle est la *variable* ? quelles sont ses *modalités* ?
+
+## Comptages
+
+Dans le jeu de données précédent, on avait accès directement à la quantité
+à tracer (nombre de films par pays de production).
+
+Ici, le jeu de données est plus riche : chaque ligne contient des informations
+sur un individu, dont celle qui nous intéresse ici, l'espèce.
+
+Il faut donc faire un *résumé* du jeu de données, pour en extraire l'information
+qui nous intéresse, à savoir le nombre d'individus par espèce.
+
+Dans `R`, il est facile de faire un tel décompte.
+
+```{r, eval = FALSE}
+penguins_nomissing$species
+penguins_nomissing$species == "Adelie"
+sum(penguins_nomissing$species == "Adelie")
+```
+
+> **1.** Retrouvez les comptages précédents à l'aide de la fonction
+`table` ou `summary`.
+
+## Graphique "artisanal"
+
+Grâce aux fonctions précédentes, il est donc possible d'extraire le nombre d'individus
+par espèces.
+
+> **1.** En utilisant les mêmes fonctions que pour le jeu de données précédent,
+faire un diagramme en barres représentant le nombre d'individus par espèce dans l'archipel.
+
+## Diagramme en barres avec `geom_bar()`
+
+Il est assez courant d'avoir à faire ce genre de décomptes avant une représentation
+graphique.
+
+`ggplot2` a donc une fonction dédiée, `geom_bar()`, qui le fait automatiquement pour nous.
+
+> **1.** Reproduire le graphique précédent, en repartant directement du jeu de données initial.
+
+
+## Nettoyage
+
+De la même manière que précédemment, le graphique "de base" peut être amélioré,
+en ré-ordonnant les facteurs, et en nommant les axes.
+
+> **1.** Rendre le graphique précédent plus "présentable". Pour réordonner les
+facteurs, vous pouvez utiliser la fonction `fct_relevel`.
+
+## Ajout d'information
+
+On peut modifier la questions d'origine, en se demandant:
+*quel est le nombre d'individus mâles et d'individus femelles de chaque espèce ?*
+
+Pour y répondre, il faut exploiter l'information `sex` contenue dans le tableau.
+Il s'agit donc de compter tous les individus de l'espèce *Adelie* mâles,
+puis tous les individus de l'espèce *Adelie* femelles, etc.
+
+Heureusement, `ggplot2` peut le faire pour nous de manière automatique, à condition
+de lui donner une "esthétique" de plus à tracer.
+
+Par exemple, l'esthétique `fill` permet de **colorer** des surfaces
+(ici, l'aire de barres) en fonction d'un facteur.
+
+> **1.** A l'aide du squelette ci-dessous, représentez le nombre d'individus 
+par espèce et par sexe dans un même graphique.
+
+Par défaut, `R` "empile" les couleurs les unes sur les autres.
+Il est parfois préférable de les représenter côte à côte.
+Cela est possible en précisant l'option `position = "dodge"` dans `geom_bar()`.
+
+> **2.** Faire varier la position des barres en utilisant l'argument position de la fonction `geom_bar()` sur le code précédent.
+
+On peut aussi utiliser une autre fonction afin de séparer le graphique en deux par sexe : il faut utiliser une nouvelle couche dans notre graphique se nommant `facet_grid`. Attention, la syntaxe ici est particulière !
+
+> **3.** Faire varier la position des barres en utilisant la fonction `facet_grid`.
+
+## Nettoyage
+
+> **1.** Rendre le graphique précédent "publiable". Présentez le contexte
+et la question en une phrase, de telle sorte à rendre la représentation auto-suffisante.
+
+---
+
+# Parlements
+
+## Données
+
+L'union interparlementaire ([UIP](https://www.ipu.org/fr)) est une organisation 
+mondiale des parlements nationaux.
+L'UIP maintient une base de données complète ([Parline](https://data.ipu.org/fr)) 
+sur la plupart des parlements dans le monde, ce qui permet de comparer
+leurs structures, leurs compositions, ou leurs méthodes de travail.
+
+On s'intéresse ici en particulier à leur jeu de données historique 
+sur les femmes dans les parlements nationaux, disponible [ici](https://data.ipu.org/dataset/percentage-of-women-in-parliament-between-1945-2018/).
+
+> **1.** Téléchargez les données, puis importez les dans `R` à l'aide de
+la fonction `read_csv`, `read_xlsx` ou `read_excel` de la librairie `readxl` (selon l'extension du fichier télécharger). Décrivez brièvement les données (taille, variables, ...).
+
+
+
+```{r}
+library(readxl)
+library(here)
+library(dplyr)
+library(tidyr)
+
+parlement <- read_xlsx(here("data", "women.xlsx"))
+
+constitutionnal <- parlement |> 
+  filter(Country == "France", Year == 1946)|>
+  select(NOTES, `Chamber Total Seats`, `Total women`) |> 
+  mutate(prop_Femme = as.integer(`Total women`) / as.integer(`Chamber Total Seats`), prop_Homme = 1 - prop_Femme) |>
+  pivot_longer(cols = c(prop_Femme, prop_Homme),
+               values_to = "Proportion",
+               names_to = "Sexe",
+               names_prefix = "prop_")
+  
+
+ggplot(constitutionnal) + aes(x = NOTES, y = Proportion, fill =Sexe) + geom_col()
+
+```
+
+
+## Assemblée constituante française
+
+Dans un premier temps, on s'intéresse uniquement à la proportion de femmes 
+dans l'assemblée constituante de la quatrième république française.
+
+> **1.** Renseignez-vous sur la quatrième république.
+En quelle année a-t-elle été proclamée ?
+Extrayez les données correspondantes à cette assemblée 
+à l'aide de la fonction `subset`.
+Quel est le pourcentage de femmes dans cette assemblée ?
+Le pourcentage d'hommes ?
+
+
+
+
+On cherche à représenter la proportion de femmes dans cette assemblée par
+un diagramme en barres.
+
+Pour ce faire, il faut re-formater les données de telle sorte à avoir une colonne
+`Sexe` (homme/femme) et une colonne `pourcent` donnant le pourcentage de
+chaque genre. 
+
+> **2.** Tracez un diagramme en barres représentant la proportions de femmes
+dans l'assemblée constituante de la quatrième république française.  
+
+Pour représenter une assemblée, un diagramme en secteurs (camembert) peut
+être plus parlant.
+Dans `R`, on peut utiliser la fonction `geom_arc_bar` de la librairie
+`ggforce`, qui complète la librairie `ggplot2` utilisée jusqu'à présent.
+
+> **3.** Tracez un diagramme en secteurs représentant le nombre de femmes
+dans l'assemblée constituante de la quatrième république française.  
+Question bonus: quelle est la proportion de femmes dans l'assemblée constituante 
+de la cinquième république ?
+
+## Evolution de la proportion de femmes dans l'assemblée d'un pays
+
+On cherche maintenant à décrire l'évolution de la proportion de femmes au cours
+du temps dans le parlement d'un pays en particulier.
+
+> **1.** Choisissez un pays et extrayez des données correspondantes.  
+Formulez clairement la question, en précisant le pays et la période choisie.
+
+Pour tracer ce jeu de données à l'aide de `ggplot`, il faut le reformater, de la même manière que pour la constituante, en créant une colone `Sexe` et une colone `pourcent`.
+Pour ce faire, vous pourrez procéder de deux manières différentes :
+
+### Classique {-}
+
+Récupérer les fréquences pour chaque année comme précédemment et construire le tableau de données associées : avec trois variables `Year`, `Sexe` et `pourcent`. Mais ça peut être long...
+
+### Librairies `dplyr` et `tidyr` {-}
+
+Ces packages permettent de manipuler les tableaux avec des commandes se rapprochant de ce que l'on pourrait faire en base de données (type SQL). Elles vont permettre en une seule commande d'effectuer plusieurs actions aboutissant au même résultat que pour la première méthode, mais de manière plus "lisible".
+
+Voici quelques commandes utiles : 
+
+- `mutate` de `dplyr` : permet de créer une nouvelle variable à partir de celles existante dans le tableau.
+
+- `pivot_longer` de `tidyr` : permet de formater le tableau de données en fusionnant deux variables portant sur la même quantité (par exemple les colonnes `pourcent` pour les hommes et `pourcent` femmes).
+
+- `select` de `dplyr` : permet de sélectionner un sous ensemble de variable du tableau.
+
+- et plein d'autres...
+
+Une fois formatée, la table sera deux fois plus longue que la table initiale.
+
+> **3.** Tracez le jeu de données en utilisant des diagrammes barres empilées.
+
+Dans le graphique précédent, les années sont représentées simplement par 
+l'`aes` `x`, et les proportions sont en `y`.
+
+Pour un diagramme camembert, on ne peut pas utiliser ces esthétiques.
+Pour tracer toutes les années côtes à côtes, on peut utiliser la fonction
+`facet_wrap`.
+
+> **4.** Tracez le jeu de données en utilisant des diagrammes en secteurs.
+
+## Autres questions
+
+Dans la première section, on s'est intéressé à un pays donné à une année donnée,
+et dans la seconde, à un pays donné au cours du temps.
+Il serait possible de s'intéresser à d'autres sous-ensembles des données, par
+exemple plusieurs pays pour une année donnée,
+ou plusieurs chambres dans un même pays, etc.
+Cela répondrait à des questions différentes, par exemple :
+"En 2002, quelle était la proportion de femmes dans les différentes assemblées 
+d'Europe ?"
+ou
+"En Italie, y-a-t-il une différence dans la proportion des femmes dans les 
+chambres hautes et basses ?"
+Chaque question appelle à une représentation différente des données.
+
+> **1.** Posez-vous une question sur les données 
+(parmi les exemples, ou une autre de votre choix),
+et tentez d'y répondre par un graphique.  
+Vous prendrez garde à bien exposer la question, le sous-ensemble des données utilisées,
+et justifierez la représentation choisie.
