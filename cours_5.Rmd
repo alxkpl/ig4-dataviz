@@ -1,7 +1,7 @@
 ---
 title: "IG4 - Visualisation"
 subtitle: "Variables Quantitatives"
-author: "Paul Bastide, Chloé Serre-Combe"
+author: "Paul Bastide, Chloé Serre-Combe, Alexandre Capel"
 output:
   ioslides_presentation:
     fig_width: 7
@@ -167,7 +167,7 @@ $~$
 Source: [Encyclopedia Titanica](https://www.encyclopedia-titanica.org/),
 par la librairie [Stat2Data](https://CRAN.R-project.org/package=Stat2Data)
 
-## Quantitatives Continues $\to$ Discrète {.build}
+## Discrétisation de variables continues {.build}
 
 On replace la variable continue par sa classe.
 
