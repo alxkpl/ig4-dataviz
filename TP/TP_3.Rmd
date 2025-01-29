@@ -188,7 +188,7 @@ dans l'assemblée constituante de la quatrième république française.
 
 > **1.** Renseignez-vous sur la quatrième république.
 En quelle année a-t-elle été proclamée ?
-Extrayez les données correspondantes à cette assemblée.
+Extrayez les données correspondantes à cette assemblée (voir variable `NOTES`).
 Quel est le pourcentage de femmes dans cette assemblée ?
 Le pourcentage d'hommes ?
 
