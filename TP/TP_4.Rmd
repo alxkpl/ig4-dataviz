@@ -12,19 +12,6 @@ library(here)
 library(ggplot2)
 ```
 
------
-
-# Introduction {-}
-
-Après les variables qualitatives, nous allons à présent nous focaliser sur le deuxième type de variable : les variables quantitatives.
-
-Les variables quantitatives ont la particularité de prendre des nombres en valeurs. Comme pour les variables qualitatives, il en existe deux sortes : 
-
-* **discrète**: des nombres qui sont séparables (par exemple les nombres entiers).
-
-* **continue**: correspondant aux valeur réelles (nombres à virgule).
-
-Ainsi, nous utiliserons également des graphiques différents pour résumer les jeux de données car ceux vus précédemment ne sont pas adaptés à des variables qualitatives.
 
 ## Mise en place {-}
 
@@ -32,8 +19,7 @@ Ouvrez le projet du cours dans `RStudio`.
 
 Créez un nouveau document `.Rmd`, avec une sortie au format `html` (ou `pdf`).
 
-**CONSIGNES :**
-Ce TP sera à rendre. Pas de panique, tout est guidé et je suis là pour d'éventuelles questions. Il faudra bien rédiger et me montrer que vous comprenez ce que vous faites. La notation prendra en compte la qualité de votre compte-rendu, ainsi que celle des graphiques. Pensez à afficher tous les codes et à les commenter. Vous pouvez travailler en groupe de 3 personnes maximum. Par groupe, vous devrez me rendre le fichier .Rmd et le fichier .pdf ou .html à l'adresse mail suivante : alexandre.capel@umontpellier.fr.
+-----
 
 # Nombre d'enfants
 

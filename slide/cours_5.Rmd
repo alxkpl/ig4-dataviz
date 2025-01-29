@@ -31,6 +31,18 @@ output:
 # Variables Quantitatives Discrètes
 <!-- ************************************************************************ -->
 
+## Définition formelle
+
+Une variable quantitative discrète est une variable numérique dont l'ensemble des valeurs possibles $E$ est fini ou dénombrable.
+
+**Exemple :**
+
+- Nombre de pile sur 10 lancer : $E = \{0, \dots, 10\}$.
+
+- Nombre d'essai avant la réussite d'un lancer : $E = \{1, 2, \dots\} = \mathbb N^*$.
+
+- Age d'un individu (en année): $E = \mathbb N$
+
 ## Nombre d'enfants par couple {.build}
 
 On s'intéresse au nombre d'enfants de moins de 25 ans par couples en France en 2017 [[source](https://www.insee.fr/fr/statistiques/4516614?sommaire=4516657&geo=FE-1)].
@@ -86,7 +98,7 @@ knitr::kable(couples_pretty)
 
 ## Représentations
 
-```{r, fig.height=3, fig.width=8, fig.align='center', echo = FALSE}
+```{r, warning=FALSE, fig.height=3, fig.width=8, fig.align='center', echo = FALSE}
 library(ggplot2)
 freq <- ggplot(couples,
                aes(x = enfants,
@@ -138,6 +150,18 @@ Mode: couples avec `r couples$enfants[which.max(couples$effectif)]` enfant.
 <!-- ************************************************************************ -->
 # Variables Quantitatives Continues
 <!-- ************************************************************************ -->
+
+## Définition formelle 
+
+Toute variable issue d'une variable aléatoire continue. 
+
+**Exemple :**
+
+- Taille d'un individu : $E = \mathbb R_+$.
+
+- Taux d'emprunt en banque : $E = [0,1]$.
+
+- Age d'un individu : $E = \mathbb R_+$.
 
 ## Âge des passagers du Titanic {.build}
 
