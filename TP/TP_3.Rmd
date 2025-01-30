@@ -1,5 +1,5 @@
 ---
-title: "TP 2 - Variables qualitatives"
+title: "TP 3 - Variables qualitatives"
 author: "Paul Bastide, Chloé Serre-Combe, Alexandre CAPEL"
 date: "2024-2025"
 output:
