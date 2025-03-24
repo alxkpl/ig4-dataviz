@@ -6,6 +6,7 @@
 *.rdx
 *__*
 *.Rproj.user*
+*correction_TP2.R
 # System specific files
 *.DS_Store
 *~
