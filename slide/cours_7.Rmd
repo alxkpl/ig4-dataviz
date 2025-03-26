@@ -1,0 +1,731 @@
+---
+title: "DO3 - Visualisation"
+subtitle: "Modèles"
+author: "Paul Bastide, CAPEL Alexandre"
+date: "25/04/2023"
+output:
+  ioslides_presentation:
+    fig_width: 7
+    fig_height: 4
+  self_contained: true
+---
+
+```{r setup, echo = FALSE}
+library("ggplot2")
+library(MASS)
+```
+
+<!-- ************************************************************************ -->
+# Relation entre deux variables
+<!-- ************************************************************************ -->
+
+## Nuage de points
+
+```{r, echo = FALSE}
+library(palmerpenguins)
+penguins <- na.omit(penguins)
+```
+
+```{r, fig.height=4, fig.width=4, fig.align='center', echo = FALSE}
+adelie <- subset(penguins, species == "Adelie")
+ggplot(data = adelie,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Adélie")
+```
+
+## Variances, covariance et correlation {.smaller .build}
+
+Soient $x_1, \dotsc, x_n$ et $y_1, \dotsc, y_n$ deux variables aléatoires
+mesurées pour chaque point de l'échantillon.  
+
+**Variances** de $x$ et $y$:
+$$
+s_x^2 = \frac{1}n \sum_{i = 1}^n (x_i - \bar{x})^2
+\quad
+s_y^2 = \frac{1}n \sum_{i = 1}^n (y_i - \bar{y})^2
+$$
+
+**Co-variance** de $x$ et $y$:
+$$
+s_{xy}^2 = \frac{1}n \sum_{i = 1}^n (x_i - \bar{x})(y_i - \bar{y})
+$$
+
+**Corrélation** de $x$ et $y$:
+$$
+\rho_{xy} 
+= \frac{s_{xy}^2}{\sqrt{s_{x}^2s_{y}^2}}
+= \frac{\sum_{i = 1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i = 1}^n (x_i - \bar{x})^2 \sum_{i = 1}^n (y_i - \bar{y})^2}}
+$$
+
+
+
+## Corrections des estimateurs {.smaller .build}
+
+Les quantités précédentes n'ont pas les "bonnes" propriétés statistiques. On utilise en général des versions alternatives dites "corrigées" : 
+
+**Variances corrigées** de $x$ et $y$:
+$$
+s_x^2 = \frac{1}{n-1} \sum_{i = 1}^n (x_i - \bar{x})^2
+\quad
+s_y^2 = \frac{1}{n-1} \sum_{i = 1}^n (y_i - \bar{y})^2
+$$
+
+**Co-variance corrigée** de $x$ et $y$:
+$$
+s_{xy}^2 = \frac{1}{n-1} \sum_{i = 1}^n (x_i - \bar{x})(y_i - \bar{y})
+$$
+
+
+## Nuage de points
+
+```{r, fig.height=4, fig.width=4, fig.align='center', echo = FALSE}
+ggplot(data = adelie,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Adélie")
+```
+
+$$
+s_x = `r sd(adelie$bill_length_mm)`
+\quad
+s_y = `r sd(adelie$bill_depth_mm)`
+\quad
+s_{xy}^2 = `r cov(adelie$bill_length_mm, adelie$bill_depth_mm)`
+$$
+
+$$\rho_{xy} = `r cor(adelie$bill_length_mm, adelie$bill_depth_mm)`$$
+
+## Nuage de points
+
+```{r, fig.height=4, fig.width=4, fig.align='center', echo = FALSE}
+gentoo <- subset(penguins, species == "Gentoo")
+ggplot(data = gentoo,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Gentoo")
+```
+
+$$
+s_x = `r sd(gentoo$bill_length_mm)`
+\quad
+s_y = `r sd(gentoo$bill_depth_mm)`
+\quad
+s_{xy}^2 = `r cov(gentoo$bill_length_mm, gentoo$bill_depth_mm)`
+$$
+
+$$\rho_{xy} = `r cor(gentoo$bill_length_mm, gentoo$bill_depth_mm)`$$
+
+## Nuage de points
+
+```{r, fig.height=4, fig.width=4, fig.align='center', echo = FALSE}
+chinstrap <- subset(penguins, species == "Chinstrap")
+ggplot(data = chinstrap,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Chinstrap")
+```
+
+$$
+s_x = `r sd(chinstrap$bill_length_mm)`
+\quad
+s_y = `r sd(chinstrap$bill_depth_mm)`
+\quad
+s_{xy}^2 = `r cov(chinstrap$bill_length_mm, chinstrap$bill_depth_mm)`
+$$
+
+$$\rho_{xy} = `r cor(chinstrap$bill_length_mm, chinstrap$bill_depth_mm)`$$
+
+## Attention {.build}
+
+La corrélation représente une relation **linéaire**
+
+```{r, fig.height=3, fig.width=4, fig.align='center', echo = FALSE}
+x <- seq(-10, 10, 1)
+dummy <- data.frame(x = x, y = x^2)
+ggplot(data = dummy, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal()
+```
+
+$$\rho_{xy} = `r cor(dummy$x, dummy$y)`$$
+
+Corrélation n'est pas causation !
+[Exemple](https://soepidemio.com/2016/11/14/correlation-statistique-prudence-a-linterpretation/)
+
+## Attention
+
+```{r, fig.height=4, fig.width=6, fig.align='center', echo = FALSE}
+ggplot(data = penguins,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm,
+           color = species)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Chinstrap")
+```
+
+$$
+s_x = `r sd(penguins$bill_length_mm)`
+\quad
+s_y = `r sd(penguins$bill_depth_mm)`
+\quad
+s_{xy}^2 = `r cov(penguins$bill_length_mm, penguins$bill_depth_mm)`
+$$
+
+$$\rho_{xy} = `r cor(penguins$bill_length_mm, penguins$bill_depth_mm)`$$
+
+<!-- ************************************************************************ -->
+# Régression Lineaire
+<!-- ************************************************************************ -->
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+```{r, fig.height=4, fig.width=5, fig.align='center', echo = FALSE}
+ggplot(data = adelie,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Adélie")
+```
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+```{r, fig.height=4, fig.width=5, fig.align='center', echo = FALSE}
+ggplot(data = adelie,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Adélie") + 
+  geom_hline(yintercept = mean(adelie$bill_depth_mm), color = "firebrick3", linewidth = 1.2)
+```
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+```{r, fig.height=4, fig.width=5, fig.align='center', echo = FALSE}
+ggplot(data = adelie,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Adélie") + 
+  geom_abline(intercept = 0, slope = 0.5, color = "firebrick3", linewidth = 1.2)
+```
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+```{r, fig.height=4, fig.width=5, fig.align='center', echo = FALSE, message=FALSE}
+ggplot(data = adelie,
+       aes(x = bill_length_mm,
+           y = bill_depth_mm)) +
+  geom_point() +
+  theme_minimal() +
+  xlab("Longueur du bec (mm)") +
+  ylab("Largeur du bec (mm)") +
+  ggtitle("Dimensions du bec de pengouins Adelie") + 
+  geom_smooth(method = "lm", se = FALSE, color = "firebrick3", linewidth = 1.2)
+```
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données:
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+**Idée**: minimiser les écarts aux carrés:
+$$
+SCR = \sum_{i = 1}^n (y_i - \beta_0 - \beta_1 x_i)^2
+$$
+
+```{r, echo=FALSE}
+set.seed(1289)
+n <- 10
+x <- runif(n)
+y <- 2 + 3*x + rnorm(n)
+sim <- data.frame(y = y, x = x)
+```
+
+<div class="columns-2">
+```{r, fig.height=2.5, fig.width=2.5, fig.align='center', echo = FALSE}
+ggplot(sim, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal() +
+  geom_hline(yintercept = mean(y), color = "firebrick3", linewidth = 1.2) +
+  geom_segment(aes(x = x, y = y, xend = x, yend = mean(y))) +
+  coord_cartesian(xlim = c(0.1, 1), ylim = c(1, 7))
+```
+
+$$
+SCR = `r sum((y - mean(y))^2)`
+$$
+
+</div>
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données:
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+**Idée**: minimiser les écarts aux carrés:
+$$
+SCR = \sum_{i = 1}^n (y_i - \beta_0 - \beta_1 x_i)^2
+$$
+
+<div class="columns-2">
+```{r, fig.height=2.5, fig.width=2.5, fig.align='center', echo = FALSE}
+ggplot(sim, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal() +
+  geom_abline(intercept = 0, slope = 7, color = "firebrick3", linewidth = 1.2) +
+  # geom_segment(aes(x = x, y = y, xend = x, yend = predict(lm(y ~ x))))
+  geom_segment(aes(x = x, y = y, xend = x, yend = 7 * x)) +
+  coord_cartesian(xlim = c(0.1, 1), ylim = c(1, 7))
+```
+
+<div class="gray2">
+$$
+SCR = `r sum((y - mean(y))^2)`
+$$
+</div>
+$$
+SCR = `r sum((y - 7 * x)^2)`
+$$
+
+
+</div>
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données:
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+**Idée**: minimiser les écarts aux carrés:
+$$
+SCR = \sum_{i = 1}^n (y_i - \beta_0 - \beta_1 x_i)^2
+$$
+
+<div class="columns-2">
+```{r, fig.height=2.5, fig.width=2.5, fig.align='center', echo = FALSE, message = FALSE}
+ggplot(sim, aes(x = x, y = y)) +
+  geom_point() +
+  theme_minimal() +
+  geom_smooth(method = "lm", se = FALSE, color = "firebrick3", linewidth = 1.2) +
+  geom_segment(aes(x = x, y = y, xend = x, yend = predict(lm(y ~ x)))) +
+  coord_cartesian(xlim = c(0.1, 1), ylim = c(1, 7))
+```
+
+<div class="gray2">
+$$
+SCR = `r sum((y - mean(y))^2)`
+$$
+$$
+SCR = `r sum((y - 7 * x)^2)`
+$$
+</div>
+$$
+SCR = `r sum((y - predict(lm(y ~ x)))^2)`
+$$
+
+</div>
+
+## Régression Lineaire
+
+**But**: trouver la "meilleure droite" pour représenter les données:
+$$
+y_i \approx \beta_0 + \beta_1 x_i
+$$
+
+**Idée**: minimiser les écarts aux carrés:
+$$
+SCR = \sum_{i = 1}^n (y_i - \beta_0 - \beta_1 x_i)^2
+$$
+
+**Moindres Carrés**:
+$$
+(\hat{\beta}_0, \hat{\beta}_1) 
+= \underset{(\beta_0, \beta_1) \in \mathbb{R}^2}{\operatorname{argmin}} 
+\left\{
+\sum_{i = 1}^n (y_i - \beta_0 - \beta_1 x_i)^2
+\right\}
+$$
+
+
+## Régression linéaire {.smaller .build}
+
+On a doit avoir : 
+
+$$
+\begin{cases} -2\sum_{i = 1}^n (y_i - \beta_0- \beta_1x_i ) = 0 \\ -2\sum_{i = 1}^n x_i(y_i - \beta_0 - \beta_1 x_i)=0\end{cases} 
+$$
+
+$~$ 
+
+$$
+\Leftrightarrow \begin{cases} \beta_0 = \frac 1n\sum_{i = 1}^n y_i - \beta_1\frac 1n\sum_{i = 1}^n x_i\\ \sum_{i = 1}^n x_iy_i - \beta_0\sum_{i = 1}^nx_i = \beta_1\sum_{i = 1}^n x_i^2\end{cases}
+$$
+
+$~$ 
+
+$$
+\Leftrightarrow \begin{cases} \beta_0 = \bar{y} - \beta_1 \bar{x}  \\ \beta_1 = \frac{s_{xy}^2}{s_x^2}\end{cases}
+$$
+
+## Régression linéaire - Remarque {.build}
+
+- La droite passe par le point $(\bar x, \bar y)$. 
+
+$\hookrightarrow$ des données centrées donnent une droite linéaire.
+
+- si les données sont réduites (i.e. $s_x = s_y = 1$), le coefficient $\beta_1 = \rho_{xy}$.
+
+$\hookrightarrow$ lien entre tendance linéaire et coefficient de corrélation.
+
+**Attention** Ne pas utiliser la variance corrigée.
+
+## Régression Lineaire
+
+```{r}
+lm(bill_depth_mm ~ bill_length_mm, data = penguins)
+```
+
+`lm`: *linear model* fonction `R` pour faire la régression.
+
+Ressources:
+
+* [StatQuest](https://www.youtube.com/watch?v=PaFPbb66DxQ)
+
+* [Le modèle linéaire et ses extensions](https://www6.inrae.fr/mia-paris/content/download/4281/40718/version/1/file/ModeleLineaireEt_Extensions.pdf) (Chapitre 1)
+
+## Résultats {.smaller}
+
+On peut regarder plus en détails les résultats de la régression à l'aide de la commande `summary()`.
+
+```{r}
+fit <- lm(bill_depth_mm ~ bill_length_mm, data = penguins)
+summary(fit)
+```
+
+
+## Pingouins
+
+La largeur du bec est-elle liée à la longueur du bec ?
+
+```{r, fig.height=3, fig.width=4, fig.align='center', echo = TRUE, message=FALSE}
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Relation négative ?
+
+## Régression avec classes 
+
+Il peut arriver que l'intercept (voire le coefficient directeur) dépendent d'une variable qualitative. Notre modèle s'écrira alors : 
+
+$$
+y_{ei} \approx \beta_e + \beta_1 x_i
+$$
+où $e$ est une modalité de la variable de groupe (par exemple l'espèce pour les pingouins).
+
+
+## Régression avec classes
+
+Pour faire intervenir les espèce, il suffit d'écrire : 
+
+```{r}
+lm(bill_depth_mm ~ species + bill_length_mm - 1, data = penguins)
+```
+
+
+## Pour avoir plus d'informations {.smaller}
+
+```{r}
+fit <- lm(bill_depth_mm ~ species + bill_length_mm - 1, data = penguins)
+summary(fit)
+```
+
+## Groupe de référence
+
+**Attention** Si on ne met pas le `-1` dans la fonction `lm` ça change l'interprétation des conclusions et des coefficients : 
+
+- si il y est : chaque coefficient correspond à la valuer pour un groupe et les tests vérifient si les coeffcients sont nuls ou non.
+
+- si il n'y est pas : un groupe est choisi comme modalité de référence (généralement le premier par ordre alphabétique) et les coefficients correspondent à la différences entre les valeurs des coefficients "classiques" avec le groupe de référence. 
+
+**Résultats** On teste à savoir si il y a un effet significatif d'un groupe par rapport aux autres.
+
+## Régression avec groupe de référence {.smaller}
+
+
+```{r}
+fit <- lm(bill_depth_mm ~ species + bill_length_mm, data = penguins)
+summary(fit)
+```
+
+
+## Pingouins
+
+La largeur du bec est-elle liée à la longueur du bec, pour chaque espèce ?
+
+```{r, fig.height=3, fig.width=6, fig.align='center', echo = TRUE, message=FALSE}
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm,
+                            color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+## Pingouins
+
+La largeur du bec est-elle liée à la longueur du bec, pour chaque espèce ?
+
+```{r, fig.height=3, fig.width=6, fig.align='center', echo = TRUE, message=FALSE}
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm,
+                            color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Régression Lineaire
+
+Atouts:
+
+* Intuitif, théorie bien connue
+
+* Peut aider à distinguer des tendances
+
+Mais :
+
+* Peut être trompeur
+
+* Toutes les relations ne sont pas linéaires
+
+## Régression linéaire multiple
+
+Il est possible de régresser selon plusieurs variables, ainsi on écrit : 
+
+$$
+y_{ei} \approx \beta_0 + \sum_{j = 1}^p \beta_j x_{ij}
+$$
+où $x_{\cdot j}$ est la $j$-ème variable.
+
+De la même manière que le cas classique, on cherchera alors :
+
+$$
+\hat{\beta} = \underset{\beta \in \mathbb{R}^{p+1}}{\operatorname{argmin}} 
+||y - X \beta||^2
+$$
+avec $X$ la matrice des variables. 
+
+## Régression linéaire multiple {.smaller}
+
+Dans `R` rien ne change : 
+
+```{r}
+lm(bill_depth_mm ~ flipper_length_mm + 
+     bill_length_mm + body_mass_g, data = penguins)
+```
+
+Pour mettre toute les variables on peut aussi écrire : `lm(bill_depth_mm ~ ., data = penguins)`.
+
+## Régression linéaire multiple {.smaller}
+
+```{r}
+fit <- lm(bill_depth_mm ~ flipper_length_mm + 
+     bill_length_mm + body_mass_g, data = penguins)
+summary(fit)
+```
+
+
+<!-- ************************************************************************ -->
+# Tendances
+<!-- ************************************************************************ -->
+
+## Voitures
+
+```{r, fig.height=4, fig.width=4, fig.align='center', message = FALSE}
+ggplot(Cars93) +
+  aes(x = Price, y = Fuel.tank.capacity) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Voitures
+
+```{r, fig.height=4, fig.width=4, fig.align='center', message = FALSE}
+ggplot(Cars93) +
+  aes(x = Price, y = Fuel.tank.capacity) +
+  geom_point() +
+  geom_smooth()
+```
+
+## Voitures
+
+```{r, fig.height=4, fig.width=4, fig.align='center', message = FALSE}
+ggplot(Cars93) +
+  aes(x = Price, y = Fuel.tank.capacity) +
+  geom_point() +
+  geom_smooth(method = "loess",
+              se = FALSE)
+```
+
+## LOESS
+
+**Régression locale**: *LOcally Estimated Scatterplot Smoothing* 
+
+Atouts:
+
+* Flexible
+
+* S'adapte aux données
+
+Mais:
+
+* Modèle sous-jacent complexe
+
+* Besoin de beaucoup de données pour être pertinent
+
+
+<!-- ************************************************************************ -->
+# Classification
+<!-- ************************************************************************ -->
+
+## Classification 
+
+Parfois, on peut être mené à essayer de classer des individus (ou des variables) qui se "ressemblent". 
+
+<br>
+
+Il existe diverses méthodes permettant d'effectuer ces classifications, on va se focaliser sur une en particulier : 
+
+<br>
+
+<center> les **K-Means** </center>
+
+## K-means {.smaller .build}
+
+Il s'agit d'un algorithme d'apprentissage non supervisé consistant à classifier des points en $K$ groupes (ou $K$ clusters). 
+
+
+
+| **Algorithme.**       |     
+|---    |
+|    Entrées. `x` les données, $\mu$ les centres des clusters   |    
+|  On construit les $K$ ensembles $S_k$ correspondant aux individus $x_i$ les plus prohes des $\mu_k$. |          
+|   **Tant que** Les classes $S_k$ ne sont pas stables :    |    
+|     $\quad \quad \mu_k \leftarrow \frac1{|S_k|}\sum_{i \in S_k} x_i$   |
+| $\quad \quad$ On met à jour les $S_k$ avec les nouveaux $\mu_k$. |
+| Sorties. Les classes $S_k$ et les centres de gravités $\mu_k$.
+
+## Visuellement 
+
+
+<center>
+<img src = "figures/cours_7/kmean1.png" width = 70% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## Visuellement 
+
+<center>
+<img src = "figures/cours_7/kmean2.png" width = 70% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+
+## Visuellement 
+
+<center>
+<img src = "figures/cours_7/kmean3.png" width = 70% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## Visuellement 
+
+<center>
+<img src = "figures/cours_7/kmean3.png" width = 70% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+<br> 
+
+Stable !
+
+## Dans `R` 
+
+Une fonction `kmeans()` est disponible par défaut dans `R` dans le package `stats` (chargé automatiquement). 
+
+## K-means
+
+Atouts : 
+
+- très rapide et simple.
+
+- donne globalement de bons résultats
+
+
+Mais :
+
+- quel nombre $K$ de groupes choisir ? 
+
+- sensible aux conditions initiales : convergence locale.
+
+- peut avoir de très mauvaise performance en fonction de la structure des données.
+
+- comment interpréter les classes ?
+
+
+## Références
+
+- *Fundamentals of Data Visualization* :  
+[Chapter 14: Visualizing trends](https://clauswilke.com/dataviz/visualizing-trends.html)
+- *Data Visualization—A Practical Introduction* :  
+[Chapter 6: Work with models](https://socviz.co/modeling.html)
+- **ggplot2** reference documentation:  
+[`geom_smooth()`](https://ggplot2.tidyverse.org/reference/geom_smooth.html)

@@ -1,0 +1,220 @@
+---
+title: "TP5 - Modèles"
+author: "CAPEL Alexandre"
+date: "2025-03-25"
+output: 
+  pdf_document:
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Modèles linéaires 
+
+## Cadre théorique
+
+Dans la théorie des modèles linéaires, on fait généralement l'hypothèse suivante : 
+
+$$
+y = X \beta + \varepsilon, \quad \quad \text{avec } \varepsilon \sim \mathcal N(0, \sigma^2 I_n)
+$$
+
+Autrement dit, le vecteur $y$ est un vecteur gaussien de moyenne $X\beta$. Lorsque l'on fait une régression, on cherche donc à trouver ces coefficients $\beta$ qui nous sont inconnu. 
+
+Le vecteur $\varepsilon$ est un "bruit", une erreur aléatoire que l'on ne peut pas estimer, c'est pourquoi on écrit généralement que : 
+
+$$
+y \approx \beta_0 + \beta_1x = \hat y 
+$$
+
+dans le cas d'une régression linéaire simple.
+
+## Les données de voitures 
+
+On considère maintenant le jeu de données `mtcars` du package `car`.
+
+> **1.** Décrivez brièvement le jeu de données (variable, type etc...). On pourrait également procéder à l'analyse individuelle de chaque variable comme on a appris. 
+
+La variable qui va nous intéresser ici est la variable `mpg` (miles per gallon). Il s'agit ni plus ni moins de la consommation de la voiture. 
+
+> **2.** Quelle variable pourrait influencer la consommation d'une voiture. 
+
+On va utiliser notre intuition pour construire plusieurs modèles linéaires à partir de ces variables. 
+
+## Régression linéaire simple
+
+Pour le moment, on va se focaliser sur le modèle linéaire simple (c'est à dire avec une seule variable). 
+
+> **3.** Choisir une variable parmis celles sélectionnées dans la partie précédente, et faire une régression linéaire avec la fonction `lm()`. 
+
+> **4.** Tracer la régression linéaire sur un graphique avec `ggplot`. 
+
+> **5.** Effectuez la régression sur les autres variables.
+
+On aimerait maintenant vérifier la pertinence de ces modèles. 
+
+Pour se faire, on dispose deux outils majeurs : 
+
+- les tests statistiques sur la nullité des coefficients.
+
+- la qualité d'ajustement du modèle. 
+
+
+### Test de nullité
+
+On rappelle qu'on a vu qu'à l'aide de la fonction `summary()`, on a accès à certaines informations sur le modèle linéaire construit. Il existe notamment un test statistiques appelé test de Student, qui va vérifier la nullité des coefficients $\beta_j$ un à un. 
+
+**Attention** il y a des hypothèses à vérifier pour que les conclusions de ces test soit valides : la normalité des résidus. 
+
+> **6.** Reprenons les résultats de la première régression et regardez les résultats du test. Que peut-on en conclure ?
+
+> **7.** Vérifiez la normalité des résidus à l'aide du test de Shapiro-Wilks (`shapiro.test()`).
+
+### Qualité d'ajustement
+
+On peut également regarder la qualité d'ajustement de notre modèle c'est à dire : est-ce que mon modèle explique bien les données. 
+
+Pour cela regardons la dispersion totale des données, c'est à dire l'inertie. Elle se calcule à l'aide de la somme des carré totaux donnée par : 
+
+$$
+TSS = ||y - \bar y ||^2
+$$
+
+La part d'information expliquée par le modèle est quant à elle donnée par la somme des carrés expliqués :
+
+$$
+ESS = ||\hat y - \bar y|| ^2 
+$$
+
+Il manque alors la part non expliquée par le modèle, donnée par la somme des résidus aux carrés : 
+
+$$
+RSS = ||y - \hat y ||^2
+$$
+
+Ainsi, on obtient la décomposition : 
+
+$$
+TSS = ESS + RSS
+$$
+
+On définit alors la qualité d'ajustement du modèle par : 
+
+$$
+R^2 = \frac{ESS}{TSS} \in [0,1]
+$$
+
+> **8.** Calculez manuellement le coefficient $R^2$ du modèle. Arrivez vous à le retrouver à l'aide de `summary` ? Commentez. 
+
+> **9.**  Faire l'analyse avec les autres variables.
+
+## Régression linéaire multiple
+
+On va maintenant essayer d'effectuer une regression sur plusieurs variables.
+
+> **10.** Effectuez la régression à l'aide de toutes les variables sélectionnées dans la section 1.2. 
+
+Bien sûr tous les coefficients, et tests (sous réserve de normalité des résidus) sont valables donc on peut l'utiliser dans notre analyse. 
+
+> **11.** Faire la régression avec toutes les variables. Que dire du $R^2$ ? 
+
+
+# Modèles linéaires généralisée 
+
+## Présentation 
+
+On voit dans le modèle linéaire gaussien, on ne peut pas intégrer raisonnablement des données qui vont être seulement positive, ou tout simplement discrète. 
+
+Pour cela, on utilise alors les modèles linéaires généralisées qui sont une extension des modèles linéaires classiques et permettant de traiter tout type de données. 
+
+La théorie des modèles linéaires généralisées étant très vaste, on se limitera ici dans le cas de la régression logistique et multinomiale. 
+
+## Modèle logistique
+
+On aimerait expliquer le succès ou l'échec de l'ascension de l'Everet d'une personne à l'aide d'un modèle de régression logistique. 
+
+> **1.** Charger le jeu de données `members.csv`. 
+
+### Cadre théorique 
+
+Dans le modèle de régression logistique ou souhaite modéliser une variable binaire par : 
+
+$$
+y \sim \mathcal B(1,p)
+$$
+telle que $\log(\frac{p}{1-p}) = X\beta$. 
+
+Au niveau de l'interprétation tout change : en effet, on ne regarde plus une valeur mais une probabilité de succès ou d'échec. 
+
+### Analyse avec une seule variable
+
+Tout d'abord, essayons de voir si l'âge a une influence sur la réussite ou non d'une ascension. 
+
+> **2.** Effectuez la régression logistique en fonction de l'âge. Commentez. 
+
+> **3.** À partir des valeurs des coefficients, tracez la courbe de probabilité de succés en fonction de l'âge. Est-ce que c'était attendu ? 
+
+### Analyse avec plusieurs variables
+
+On aimerait avoir l'effet de l'oxygène sur la succès ou l'échec en plus de l'âge. 
+
+> **4.** Réalisez à nouveau une régression logistique et commentez les résultats. Tracez la courbe en fonction de l'âge et de l'utilisation de l'oxygène. 
+
+Pour comparer des modèles entre eux, on peut utiliser le coefficient `AIC` présent en sortie de `summary()`. On choisira alors le modèle avec le plus petit `AIC`. 
+
+> **5.** Comparez les `AIC` des deux modèles. Lequel semble être le meilleur ?
+
+
+## Régression multinomiale
+
+
+### Cadre théorique 
+
+La régression multinomiale est une régression logistique avec plus de 2 classes. Ainsi, on a un modèle où :
+
+- $y$ peut prendre $K$ valeurs. 
+
+- chaque probabilité d'appartenir en un groupe $k$ s'exprime telle que :
+$$
+\log(\frac{p_k}{p_K}) = X\beta_k
+$$
+
+On peut en déduire que : 
+
+$$
+p_k = \frac{\exp(X\beta_k)}{1+\sum_{l=1}^{K-1} \exp(X\beta_l)}
+$$
+
+On remarque qu'on a $(K-1) \times p$ coefficients à estimer.
+
+
+## Applications à des données de fleurs 
+
+On souhaiterait connaître la probabilité d'appartenance d'une fleur à partir de la longueur de ses pétales. On utilise le jeu de données `iris`.
+
+
+> **6.** Effectuez la régression multinomiale de l'espèce d'iris par rapport à la longueur des pétales en utilisant la fonction `multinom` du package `nnet`. Commentez.
+
+
+> **7.** Tracez la courbe des modalités.
+
+# Classification
+
+On a vu un algorithme de classification dans le cours : celui des $K$-means. Le but ici est d'utiliser cet algorithme pour classer les voitures en plusieurs groupes et ensuite voir ce qui les caractérise. 
+
+> **1.** Procéder à l'algorithme des $K$-means sur les données de `mtcars` avec 3 classes. Répétez plusieurs fois l'opération. Que remarquez vous ?
+
+**Attention.** Il faut transformer les variables qualitatives en tableau disjonctif complet. Pour transformer un facteur en tableau disjonctif complet, on peut utiliser la fonction `tab.disjonctif` du package `FactorMineR`.
+
+> **2.** Essayez d'expliquer ce qui différencie vos classes les unes des autres.
+
+
+
+
+
+
+
+
+
