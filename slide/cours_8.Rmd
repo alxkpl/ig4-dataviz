@@ -1,0 +1,427 @@
+---
+title: "DO3 - Visualisation"
+subtitle: "R-Shiny"
+author: "CAPEL Alexandre"
+date: "2025-03-24"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(shiny)
+```
+
+<!-- ************************************************************************ -->
+# Présentation R-Shiny
+<!-- ************************************************************************ -->
+
+## `R-Shiny
+
+`Shiny` est une librairie `R`, intégré directement dans `R`studio qui permet de construire facilement des graphiques interactifs (voire des applications) sous forme d'une *WebApp*. 
+
+## Exemple d'applications 
+
+[drinkr](https://gallery.shinyapps.io/drinkr/) constitue un petit exemple introductif de l'utilisation de Shiny pour le calcul du taux d'alcool dans le sang en fonction de votre consommation.
+
+## Exemple d'applications 
+
+Cet outil est aussi utilisé par l'administration française, voir par
+exemple la [ségrégation résidentielle en France](https://francestrategie.shinyapps.io/app_seg/),
+par [France Stratégie](https://www.strategie.gouv.fr/).
+
+<!-- ************************************************************************ -->
+# Premiers pas
+<!-- ************************************************************************ -->
+
+## Structure générale
+
+Il y a deux fichiers : 
+
+- Le fichier `server.R` contient toutes les instructions pour tracer les graphiques
+proprement dits, et produit l'objet **output**.
+
+- Le fichier `ui.R` contient lui les informations sur l'interface, et produit
+l'objet **input**.
+
+
+## Fusion des deux fichiers
+
+Il est possible de directement créer l'application à l'aide d'un seul fichier : dans ce cas, il faudra créer deux variables `server` et `ui` et les faire communiquer via la fonction `shinyApp()` de la librairie `shiny`. 
+
+```{r, echo = TRUE, eval =FALSE}
+shinyApp(ui = ui, server = server) 
+```
+
+
+## Communication input/output 
+
+Les deux fichiers communiquent entre eux grâce aux **ID** des champs de ces différents objets.
+
+## Accès aux inputs {.build}
+
+Lorsqu'un input est créé, on lui donne un **ID**. Par exemple : 
+
+```{r, echo = TRUE, eval = FALSE}
+sliderInput(inputID = "bins", ...)
+```
+
+puis lorsqu'on veut l'utiliser dans une fonction, on fait appel à lui de la manière suivante : 
+
+```{r, echo = TRUE, eval = FALSE}
+bins <- seq(min(x), max(x), length.out = input$bins + 1)
+```
+
+dans le fichier `server.R`.
+
+## Accès aux outputs {.build}
+
+Pour créer un output, on doit également lui donner un **ID** mais d'un manière différente :
+
+```{r, echo = TRUE, eval = FALSE}
+output$distPlot <- ... 
+```
+
+puis on l'appelle ainsi dans le fichier `ui.R` : 
+
+```{r, echo = TRUE, eval = FALSE}
+plotOutput("distPlot")
+```
+
+
+
+<!-- ************************************************************************ -->
+# Interface utilisateur
+<!-- ************************************************************************ -->
+
+## Création de la mise en page
+
+Avant de commencer à créer l'appliction, il faut faire créer le **layout**. 
+
+Il existe déjà plusieurs fonctions dans `R`-Shiny donnant des rendus différents : 
+
+- `verticalLayout()`, `flowLayout()` et `splitLayout()`, ou `fixedPage()` et `fluidPage()` sont disponibles directement dans `R`-Shiny 
+
+- d'autres packages existent : `bslib` et les layout `page_sidebar()`, `page_navbar()`...
+
+
+## Exemple 
+
+```{r, echo = TRUE, eval = FALSE}
+fluidPage(titlePanel("Mon titre"),
+          sidebarPanel(
+            ... # dans une barre latérale, pour les entrées
+            ), 
+          mainPanel(
+            ...# dans un panneau à coté, pour les sorties
+            )
+          )
+```
+
+
+<img src = "figures/cours_8/layout.png" width = 100% style = "text-align: right; vertical-align: middle"></img>
+
+## Type d'entrées - Bouton 
+
+
+```{r, echo = TRUE, eval = FALSE}
+fluidPage(titlePanel("Mon titre"),
+          sidebarPanel(
+             actionButton("inputId", label = "Mon beau bouton")
+            ), 
+          mainPanel(
+            ...# dans un panneau à coté, pour les sorties
+            )
+          )
+```
+
+
+<img src = "figures/cours_8/bouton.png" width = 70% style = "text-align: right; vertical-align: middle"></img>
+
+## Type d'entrées - Glissement
+
+```{r, echo = TRUE, eval = FALSE}
+fluidPage(titlePanel("Mon titre"),
+          sidebarPanel(
+             sliderInput("inputId",
+                        "ce que ça veut dire : ",
+                        min = val_min,
+                        max = val_max,
+                        value = val_init),
+            ), 
+          mainPanel(
+            ...# dans un panneau à coté, pour les sorties
+            )
+          )
+```
+
+
+<center>
+<img src = "figures/cours_8/slide.png" width = 60% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## Et pleins d'autres choses...
+
+<center>
+<img src = "figures/cours_8/input_summary.png" width = 80% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+Source : [Shiny documentation](https://shiny.posit.co/r/getstarted/build-an-app/reactive-flow/ui-inputs.html)
+
+<!-- ************************************************************************ -->
+# La fonction serveur
+<!-- ************************************************************************ -->
+
+## Le fichier `server.R`
+
+Comme son nom l'indique, il s'agit d'une fonction particulière : 
+
+
+```{r, echo = TRUE, eval = FALSE}
+function(input, output, session){
+  
+   ....
+  
+}
+```
+
+
+On vouit qu'il a accès aux entrées fournie dans l'interface utilisateurs : on va donc pouvoir les utiliser ensuite dans les codes qui fourniront les sorties. 
+
+## Fonctions de rendu
+
+Selon le type de sortie, on ne va pas utiliser la même fonction de rendu. 
+
+## Fonctions de rendu - Plot
+
+
+```{r, echo = TRUE, eval = FALSE}
+output$distPlot <- renderPlot({
+  
+  ....
+  
+})
+```
+
+<center>
+<img src = "figures/cours_8/plotoutput.png" width = 60% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+
+
+## Fonctions de rendu - Table
+
+
+```{r, echo = TRUE, eval = FALSE}
+output$distTable <- renderTable({
+  
+  ....
+  
+})
+```
+
+<center>
+<img src = "figures/cours_8/tableoutput.png" width = 60% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+
+## Dans l'interface utilisateur {.build}
+
+Bien sur, pour chaque type de sortie, il faut adapter le code dans le fichier `ui.R` :
+
+- pour un objet issu de `renderPlot()` il faut utiliser `plotOutput("nom_plot")`
+
+- - pour un objet issu de `renderTable()` il faut utiliser `tableOutput("nom_table")`
+
+
+## Exemple
+
+```{r, echo = TRUE, eval = FALSE}
+mainPanel(
+          plotOutput("distPlot"),
+          tableOutput("table")
+      )
+```
+
+<center>
+<img src = "figures/cours_8/table_plot.png" width = 60% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## Une liste non exhaustive 
+
+<center>
+<img src = "figures/cours_8/render_summary.png" width = 80% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+$~$ 
+
+Source : [Shiny documentation.](https://shiny.posit.co/r/getstarted/build-an-app/reactive-flow/render-functions.html)
+
+
+
+<!-- ************************************************************************ -->
+# Customisation de l'interface
+<!-- ************************************************************************ -->
+
+## Construction 
+
+`R`-Shiny dispose d'une liste de fonction (des "tags") qui nous permettent d'accèder aux tags HTML.
+
+```{r}
+names(tags)
+```
+
+
+## Les tags HTML
+
+On peut les utiliser de la manière suivante : 
+
+```{r, echo = TRUE, eval = FALSE}
+tags$p()
+```
+
+## Liste de certains tags 
+
+- `b` : pour **bold** c'est à dire mettre le texte en gras. 
+
+- `h1`, `h2`, ..., `h6` : pour les titres sous-titres etc... 
+
+- `p` : pour faire des paragraphes. 
+
+- `br`: pour séparer les lignes.
+
+- `a` : pour ajouter un lien. 
+
+- `img`: pour ajouter une image.
+
+...
+
+## La fonction HTML {.smaller}
+
+
+Si vous préférez faire du pur HTML vous pouvez utiliser directement la fonction `HTML()`
+
+```{r, echo = TRUE}
+HTML(
+  "<center> Voilà un texte <b> en gras </b> avec <br> un saut de ligne.</center>"
+  )
+```
+
+
+## Strcturer une page
+
+Bien sur, il existe aussi des fonctions toute faites pour pouvoir structurer facilement son application.
+
+## Les `card` {.build .smaller}
+
+On peut utiliser les fonctions `card()` et `layout_columns()` dans un layout `page_sidebar()` pour structure avec des cases par exemple : 
+
+```{r, echo = TRUE, eval = FALSE}
+page_sidebar(
+  title = titlePanel("Old Faithful Geyser Data"),
+  sidebar = sidebar(
+    sliderInput("bins","Number of bins:",
+                min = 1, max = 50, value = 30),
+    actionButton("name", label = "Coucou, je sers a rien.")),
+    mainPanel(
+      layout_columns(
+        h4("Voilà une disposition simple possible"),
+        card(plotOutput("distPlot")),
+        card(tableOutput("table")),
+        card(
+          HTML(
+            "<center><h5>C'est pas si dur de bien faire les choses.</h5></center>"
+            )
+          ),
+        col_widths = c(12, 8, 4)
+        )
+  )
+)
+```
+
+## La sortie
+
+<center>
+<img src = "figures/cours_8/cards.png" width = 100% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## Éléments conditionnels 
+
+On peut utiliser la fonction `conditionalPanel()` pour afficher certains éléments sous conditions. 
+
+```{r, eval=FALSE, echo=TRUE}
+sidebar = sidebar(
+          checkboxInput("select_bins",label = "Contrôle des bins", 
+                        value = FALSE),
+          conditionalPanel(
+            condition = "input.select_bins == true",
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 1,
+                        max = 50,
+                        value = 30)
+          ),
+          actionButton("name", label = "Coucou, je sers a rien."))
+```
+
+
+## La sortie
+
+<center>
+<img src = "figures/cours_8/condpanel1.png" width = 100% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## La sortie
+
+<center>
+<img src = "figures/cours_8/condpanel2.png" width = 100% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+
+## Les thèmes
+
+Bien sûr, on peut changer la tête de l'application en utlisant des templates déjà existant sur `R`-shiny. 
+
+$~$ 
+
+On peut par exemple utiliser les thèmes `Bootswatch` issu du package `bslib`. 
+
+## Les thèmes
+
+On ajoute par exemple la fonction `bs_themer()` dans la fonction du fichier `server.R`. Un menu apparait alors : 
+
+<center>
+<img src = "figures/cours_8/bootswatch.png" width = 100% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## Les thèmes
+
+**Attention.** Cette fonction ne s'utilise que pendant la phase de développement afin de choisir un thème. Ensuite, il faut le retirer et mettre le code suivant dans le fichier `ui.R` : 
+
+```{r, echo = TRUE, eval = FALSE}
+page_sidebar(
+  title = titlePanel("Old Faithful Geyser Data"),
+  ...
+  theme = bs_theme(bootswatch = "minty")
+)
+```
+
+
+## Résultat 
+
+<center>
+<img src = "figures/cours_8/minty.png" width = 100% style = "text-align: right; vertical-align: middle"></img>
+</center>
+
+## Pleins d'autres choses sont possibles
+
+Bien sur, on peut aussi ajouter une barre de navigation, des images et pleins de graphiques intéractifs pour étofer notre application.
+
+## Référence
+
+
+- [Shiny tutoriel](https://shiny.posit.co/r/getstarted/build-an-app/reactive-flow/render-functions.html)
+
+- [Guide complet](https://shiny.rstudio.com/tutorial/).
+
+
+
